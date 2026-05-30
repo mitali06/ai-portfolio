@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Portfolio - Mitali Kasurde</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      padding: 2.5rem;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .header p {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .demo {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .demo label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #333;
+    }
+    
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.3s;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    
+    button {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+    
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+    
+    .output {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      border-radius: 8px;
+      display: none;
+    }
+    
+    .output.show {
+      display: block;
+    }
+    
+    .output.loading {
+      color: #666;
+      font-style: italic;
+    }
+    
+    .output.error {
+      background: #ffebee;
+      border-left-color: #e53935;
+      color: #c62828;
+    }
+    
+    .output.success {
+      color: #333;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 AI Portfolio</h1>
+      <p>Powered by Claude AI</p>
+    </div>
+
+    <div class="demo">
+      <label for="input">Ask me anything or paste text to analyze:</label>
+      <textarea id="input" placeholder="E.g., 'Analyze the sentiment of this review...' or 'What are trends in AI?'"></textarea>
+      <div class="button-group">
+        <button class="btn-primary" onclick="sendRequest()">Submit</button>
+        <button class="btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+
+    <div class="output" id="output"></div>
+
+    <div class="footer">
+      <p>✨ Built with Claude API | Vercel</p>
+    </div>
+  </div>
+
+  <script>
+    async function sendRequest() {
+      const input = document.getElementById('input').value;
+      const output = document.getElementById('output');
+
+      if (!input.trim()) {
+        output.classList.add('show', 'error');
+        output.textContent = '⚠️ Please enter some text';
+        return;
+      }
+
+      output.classList.add('show', 'loading');
+      output.classList.remove('error', 'success');
+      output.textContent = '⏳ Processing...';
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: input })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        output.classList.remove('loading', 'error');
+        output.classList.add('success');
+        output.textContent = data.reply;
+      } catch (error) {
+        output.classList.remove('loading', 'success');
+        output.classList.add('error');
+        output.textContent = `❌ ${error.message}`;
+      }
+    }
+
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').classList.remove('show');
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('input').addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        sendRequest();
+      }
+    });
+  </script>
+</body>
+</html>

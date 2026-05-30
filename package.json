@@ -1,0 +1,11 @@
+{
+  "name": "ai-portfolio",
+  "version": "1.0.0",
+  "description": "Simple AI portfolio powered by Claude",
+  "main": "index.html",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "author": "mitali06",
+  "license": "MIT"
+}
