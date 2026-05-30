@@ -3,56 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Financial Risk Assessment Tool</title>
+  <title>RiskIQ - AI Powered Finance</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
+    :root {
+      --primary-navy: #1a3a52;
+      --primary-teal: #0ea5e9;
+      --accent-orange: #f59e0b;
+      --accent-amber: #fbbf24;
+      --status-low: #10b981;
+      --status-medium: #f59e0b;
+      --status-high: #ef4444;
+      --status-critical: #dc2626;
+      --bg-light: #f9fafb;
+      --bg-white: #ffffff;
+      --text-dark: #1f2937;
+      --text-gray: #6b7280;
+      --text-light: #9ca3af;
+      --border-color: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
     }
     
     .container {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      max-width: 700px;
-      width: 100%;
-      padding: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
     }
     
+    /* Header */
     .header {
-      text-align: center;
+      background: linear-gradient(135deg, var(--primary-navy) 0%, #0f2942 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
       margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg);
     }
     
-    .header h1 {
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-left h1 {
       font-size: 28px;
-      color: #333;
+      font-weight: 700;
       margin-bottom: 0.5rem;
     }
     
-    .header p {
-      color: #666;
+    .header-left p {
       font-size: 14px;
+      opacity: 0.9;
     }
     
+    /* Main Content */
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    @media (max-width: 1024px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Form Section */
     .form-section {
-      background: #f8f9fa;
-      padding: 1.5rem;
+      background: var(--bg-white);
       border-radius: 12px;
-      margin-bottom: 1.5rem;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
     }
     
-    .form-section h3 {
-      font-size: 16px;
-      color: #333;
+    .form-section h2 {
+      font-size: 20px;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .icon-lg {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    
+    .form-subsection {
+      margin-bottom: 2rem;
+    }
+    
+    .form-subsection h3 {
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 600;
       margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary-navy);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -61,7 +124,11 @@
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
+    }
+    
+    .form-grid.full {
+      grid-template-columns: 1fr;
     }
     
     .form-group {
@@ -69,70 +136,74 @@
       flex-direction: column;
     }
     
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
-    
     label {
       font-size: 13px;
       font-weight: 600;
-      color: #555;
+      color: var(--text-dark);
       margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
     }
     
     .label-hint {
       font-size: 11px;
-      color: #999;
+      color: var(--text-light);
       font-weight: normal;
     }
     
     input, select {
       padding: 0.75rem;
-      border: 2px solid #e0e0e0;
+      border: 1.5px solid var(--border-color);
       border-radius: 8px;
       font-family: inherit;
       font-size: 14px;
-      transition: border-color 0.3s;
+      transition: all 0.2s;
+      background-color: var(--bg-white);
     }
     
     input:focus, select:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
     }
     
-    input[type="number"] {
-      font-size: 14px;
+    input::placeholder {
+      color: var(--text-light);
     }
     
+    /* Buttons */
     .button-group {
       display: flex;
       gap: 1rem;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
     }
     
     button {
       flex: 1;
-      padding: 0.75rem 1.5rem;
+      padding: 0.875rem 1.5rem;
       border: none;
       border-radius: 8px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
     
     .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-amber) 100%);
       color: white;
+      box-shadow: var(--shadow-md);
     }
     
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      box-shadow: var(--shadow-lg);
     }
     
     .btn-primary:active {
@@ -140,30 +211,39 @@
     }
     
     .btn-secondary {
-      background: #e0e0e0;
-      color: #333;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      border: 1.5px solid var(--border-color);
     }
     
     .btn-secondary:hover {
-      background: #d0d0d0;
+      background: #f3f4f6;
+      border-color: var(--text-light);
     }
     
-    .result {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      border-radius: 12px;
+    /* Results Section */
+    .results-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .results-section.hidden {
       display: none;
-      animation: slideIn 0.4s ease-out;
     }
     
-    .result.show {
-      display: block;
+    .result-card {
+      background: var(--bg-white);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      animation: slideIn 0.4s ease-out;
     }
     
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
@@ -171,230 +251,376 @@
       }
     }
     
-    .result.loading {
-      background: #e3f2fd;
-      color: #1976d2;
+    .loading {
       text-align: center;
-      padding: 2rem;
-    }
-    
-    .result.error {
-      background: #ffebee;
-      border-left: 4px solid #e53935;
-      color: #c62828;
-    }
-    
-    .result.success {
-      background: #f0f4ff;
-      border-left: 4px solid #667eea;
-    }
-    
-    .risk-score {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    }
-    
-    .risk-meter {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 24px;
-      color: white;
-      margin-right: 1rem;
-      min-width: 80px;
-    }
-    
-    .risk-meter.high {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-    }
-    
-    .risk-meter.medium {
-      background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
-    }
-    
-    .risk-meter.low {
-      background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
-    }
-    
-    .risk-details {
-      flex: 1;
-    }
-    
-    .risk-label {
-      font-size: 12px;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .risk-category {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-    }
-    
-    .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    
-    .concern-item {
-      background: rgba(0, 0, 0, 0.03);
-      padding: 0.75rem;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    
-    .concern-item strong {
-      color: #667eea;
-    }
-    
-    .footer {
-      text-align: center;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #e0e0e0;
-      font-size: 12px;
-      color: #999;
+      padding: 3rem 2rem;
+      color: var(--text-gray);
     }
     
     .spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(14, 165, 233, 0.2);
       border-radius: 50%;
-      border-top-color: white;
+      border-top-color: var(--primary-teal);
       animation: spin 0.8s linear infinite;
-      margin-right: 0.5rem;
+      margin-right: 0.75rem;
       vertical-align: middle;
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    
+    .error {
+      background: #fee2e2;
+      color: var(--status-high);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--status-high);
+    }
+    
+    /* Risk Score Display */
+    .risk-score-display {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .risk-gauge {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .risk-gauge-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--status-low) 0deg,
+        var(--status-medium) 90deg,
+        var(--status-high) 180deg,
+        var(--status-critical) 270deg
+      );
+      opacity: 0.15;
+    }
+    
+    .risk-gauge-value {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    
+    .risk-gauge-number {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--primary-navy);
+      line-height: 1;
+    }
+    
+    .risk-gauge-max {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-top: 0.25rem;
+    }
+    
+    .risk-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .risk-badge.low {
+      background-color: #dcfce7;
+      color: var(--status-low);
+    }
+    
+    .risk-badge.medium {
+      background-color: #fef3c7;
+      color: var(--status-medium);
+    }
+    
+    .risk-badge.high {
+      background-color: #fee2e2;
+      color: var(--status-high);
+    }
+    
+    .risk-badge.critical {
+      background-color: #fecaca;
+      color: var(--status-critical);
+    }
+    
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .metric-item {
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary-teal);
+    }
+    
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .metric-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    
+    /* Analysis Sections */
+    .analysis-section {
+      margin-bottom: 2rem;
+    }
+    
+    .analysis-section h3 {
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .analysis-item {
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      border-left: 3px solid var(--accent-orange);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .analysis-item.concern {
+      border-left-color: var(--status-high);
+    }
+    
+    .analysis-item.positive {
+      border-left-color: var(--status-low);
+    }
+    
+    .analysis-item strong {
+      color: var(--primary-navy);
+    }
+    
+    /* Recommendation */
+    .recommendation-box {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1.5px solid var(--primary-teal);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .recommendation-box h3 {
+      font-size: 14px;
+      color: var(--primary-navy);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .recommendation-box p {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-light);
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <div class="header">
-      <h1>💰 Financial Risk Assessment</h1>
-      <p>AI-powered loan application risk analysis</p>
+      <div class="header-content">
+        <div class="header-left">
+          <h1>RiskIQ</h1>
+          <p>AI Powered Finance</p>
+        </div>
+      </div>
     </div>
 
-    <form onsubmit="assessRisk(event)">
-      <!-- Personal Information -->
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Form Section -->
       <div class="form-section">
-        <h3>👤 Personal Information</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Annual Income <span class="label-hint">(USD)</span></label>
-            <input type="number" id="income" placeholder="e.g., 75000" min="0" required>
+        <h2>
+          <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Risk Assessment Form
+        </h2>
+        
+        <form id="riskForm" onsubmit="assessRisk(event)">
+          <!-- Personal Information -->
+          <div class="form-subsection">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Personal Information
+            </h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Annual Income <span class="label-hint">(USD)</span></label>
+                <input type="number" id="income" placeholder="75000" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Age <span class="label-hint">(Years)</span></label>
+                <input type="number" id="age" placeholder="35" min="18" max="100" required>
+              </div>
+              <div class="form-group">
+                <label>Employment History <span class="label-hint">(Years)</span></label>
+                <input type="number" id="employment" placeholder="5" min="0" max="70" required>
+              </div>
+              <div class="form-group">
+                <label>Employment Status</label>
+                <select id="employment-status" required>
+                  <option value="">Select status...</option>
+                  <option value="Employed">Employed</option>
+                  <option value="Self-Employed">Self-Employed</option>
+                  <option value="Retired">Retired</option>
+                  <option value="Unemployed">Unemployed</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Age <span class="label-hint">(Years)</span></label>
-            <input type="number" id="age" placeholder="e.g., 35" min="18" max="100" required>
+
+          <!-- Financial Information -->
+          <div class="form-subsection">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <path d="M2 10h20"></path>
+              </svg>
+              Financial Information
+            </h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Credit Score <span class="label-hint">(300-850)</span></label>
+                <input type="number" id="credit-score" placeholder="720" min="300" max="850" required>
+              </div>
+              <div class="form-group">
+                <label>Total Debt <span class="label-hint">(USD)</span></label>
+                <input type="number" id="total-debt" placeholder="30000" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Monthly Expenses <span class="label-hint">(USD)</span></label>
+                <input type="number" id="monthly-expenses" placeholder="3500" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Savings Balance <span class="label-hint">(USD)</span></label>
+                <input type="number" id="savings" placeholder="15000" min="0" required>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Employment History <span class="label-hint">(Years)</span></label>
-            <input type="number" id="employment" placeholder="e.g., 5" min="0" max="70" required>
+
+          <!-- Loan Details -->
+          <div class="form-subsection">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20m10-10H2"></path>
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              </svg>
+              Loan Details
+            </h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Loan Amount <span class="label-hint">(USD)</span></label>
+                <input type="number" id="loan-amount" placeholder="50000" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Loan Purpose</label>
+                <select id="loan-purpose" required>
+                  <option value="">Select purpose...</option>
+                  <option value="Home Purchase">Home Purchase</option>
+                  <option value="Auto Purchase">Auto Purchase</option>
+                  <option value="Debt Consolidation">Debt Consolidation</option>
+                  <option value="Business Expansion">Business Expansion</option>
+                  <option value="Education">Education</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Loan Term <span class="label-hint">(Years)</span></label>
+                <input type="number" id="loan-term" placeholder="5" min="1" max="30" required>
+              </div>
+              <div class="form-group">
+                <label>Previous Defaults</label>
+                <select id="previous-defaults" required>
+                  <option value="">Select...</option>
+                  <option value="0">None</option>
+                  <option value="1">1 (Paid off)</option>
+                  <option value="2">2 (Paid off)</option>
+                  <option value="3+">3+ (Paid off)</option>
+                  <option value="Current">Current Default</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Employment Status</label>
-            <select id="employment-status" required>
-              <option value="">Select status...</option>
-              <option value="Employed">Employed</option>
-              <option value="Self-Employed">Self-Employed</option>
-              <option value="Retired">Retired</option>
-              <option value="Unemployed">Unemployed</option>
-            </select>
+
+          <div class="button-group">
+            <button type="submit" class="btn-primary">
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              Analyze Risk
+            </button>
+            <button type="reset" class="btn-secondary">Clear Form</button>
           </div>
-        </div>
+        </form>
       </div>
 
-      <!-- Financial Information -->
-      <div class="form-section">
-        <h3>💳 Financial Information</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Credit Score <span class="label-hint">(300-850)</span></label>
-            <input type="number" id="credit-score" placeholder="e.g., 720" min="300" max="850" required>
-          </div>
-          <div class="form-group">
-            <label>Total Debt <span class="label-hint">(USD)</span></label>
-            <input type="number" id="total-debt" placeholder="e.g., 30000" min="0" required>
-          </div>
-          <div class="form-group">
-            <label>Monthly Expenses <span class="label-hint">(USD)</span></label>
-            <input type="number" id="monthly-expenses" placeholder="e.g., 3500" min="0" required>
-          </div>
-          <div class="form-group">
-            <label>Savings Balance <span class="label-hint">(USD)</span></label>
-            <input type="number" id="savings" placeholder="e.g., 15000" min="0" required>
-          </div>
-        </div>
+      <!-- Results Section -->
+      <div class="results-section hidden" id="resultsSection">
+        <div class="result-card" id="resultCard"></div>
       </div>
+    </div>
 
-      <!-- Loan Details -->
-      <div class="form-section">
-        <h3>📋 Loan Details</h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Loan Amount <span class="label-hint">(USD)</span></label>
-            <input type="number" id="loan-amount" placeholder="e.g., 50000" min="0" required>
-          </div>
-          <div class="form-group">
-            <label>Loan Purpose</label>
-            <select id="loan-purpose" required>
-              <option value="">Select purpose...</option>
-              <option value="Home Purchase">Home Purchase</option>
-              <option value="Auto Purchase">Auto Purchase</option>
-              <option value="Debt Consolidation">Debt Consolidation</option>
-              <option value="Business Expansion">Business Expansion</option>
-              <option value="Education">Education</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Loan Term <span class="label-hint">(Years)</span></label>
-            <input type="number" id="loan-term" placeholder="e.g., 5" min="1" max="30" required>
-          </div>
-          <div class="form-group">
-            <label>Previous Defaults</label>
-            <select id="previous-defaults" required>
-              <option value="">Select...</option>
-              <option value="0">None</option>
-              <option value="1">1 (Paid off)</option>
-              <option value="2">2 (Paid off)</option>
-              <option value="3+">3+ (Paid off)</option>
-              <option value="Current">Current Default</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button type="submit" class="btn-primary">🔍 Analyze Risk</button>
-        <button type="reset" class="btn-secondary">Clear Form</button>
-      </div>
-    </form>
-
-    <div class="result" id="result"></div>
-
+    <!-- Footer -->
     <div class="footer">
-      <p>✨ Powered by Claude AI | This is a demo tool for educational purposes</p>
+      <p>✨ Powered by Claude AI | RiskIQ Assessment Tool</p>
     </div>
   </div>
 
@@ -415,10 +641,11 @@
       const loanTerm = document.getElementById('loan-term').value;
       const previousDefaults = document.getElementById('previous-defaults').value;
 
-      const resultDiv = document.getElementById('result');
-      resultDiv.classList.add('show', 'loading');
-      resultDiv.classList.remove('error', 'success');
-      resultDiv.innerHTML = '<span class="spinner"></span>Analyzing financial risk...';
+      const resultsSection = document.getElementById('resultsSection');
+      const resultCard = document.getElementById('resultCard');
+      
+      resultsSection.classList.remove('hidden');
+      resultCard.innerHTML = '<div class="loading"><span class="spinner"></span>Analyzing financial risk...</div>';
 
       const prompt = `You are a financial risk assessment expert. Analyze this loan application and provide a comprehensive risk assessment.
 
@@ -481,31 +708,90 @@ CONCLUSION:
         const riskLevel = riskLevelMatch ? riskLevelMatch[1].toUpperCase() : 'MEDIUM';
         const riskPercentage = riskPercentageMatch ? parseInt(riskPercentageMatch[1]) : 50;
 
-        let riskClass = 'medium';
-        if (riskPercentage < 40) riskClass = 'low';
-        else if (riskPercentage > 65) riskClass = 'high';
+        let riskBadgeClass = 'medium';
+        if (riskPercentage < 40) riskBadgeClass = 'low';
+        else if (riskPercentage > 65) riskBadgeClass = 'high';
 
-        resultDiv.classList.remove('loading');
-        resultDiv.classList.add('success');
-        resultDiv.innerHTML = `
-          <div class="risk-score">
-            <div class="risk-meter ${riskClass}">
-              ${riskPercentage}%
+        // Extract sections
+        const metricsMatch = analysis.match(/KEY METRICS:([\s\S]*?)PRIMARY CONCERNS:/i);
+        const concernsMatch = analysis.match(/PRIMARY CONCERNS:([\s\S]*?)POSITIVE FACTORS:/i);
+        const positiveMatch = analysis.match(/POSITIVE FACTORS:([\s\S]*?)RECOMMENDATIONS:/i);
+        const recommendMatch = analysis.match(/RECOMMENDATIONS:([\s\S]*?)CONCLUSION:/i);
+        const conclusionMatch = analysis.match(/CONCLUSION:([\s\S]*?)$/i);
+
+        const metrics = metricsMatch ? metricsMatch[1].trim().split('\n').filter(l => l.trim()) : [];
+        const concerns = concernsMatch ? concernsMatch[1].trim().split('\n').filter(l => l.trim()) : [];
+        const positive = positiveMatch ? positiveMatch[1].trim().split('\n').filter(l => l.trim()) : [];
+        const recommendations = recommendMatch ? recommendMatch[1].trim().split('\n').filter(l => l.trim()) : [];
+        const conclusion = conclusionMatch ? conclusionMatch[1].trim() : '';
+
+        resultCard.innerHTML = `
+          <div class="risk-score-display">
+            <div class="risk-gauge">
+              <div class="risk-gauge-bg"></div>
+              <div class="risk-gauge-value">
+                <div class="risk-gauge-number">${riskPercentage}</div>
+                <div class="risk-gauge-max">/ 100</div>
+              </div>
             </div>
-            <div class="risk-details">
-              <div class="risk-label">Overall Risk Assessment</div>
-              <div class="risk-category">${riskLevel} RISK</div>
-            </div>
+            <div class="risk-badge ${riskBadgeClass}">${riskLevel} RISK</div>
           </div>
 
-          <div style="white-space: pre-wrap; line-height: 1.6; color: #333; font-size: 14px;">
-            ${analysis}
+          <div class="metrics-grid">
+            ${metrics.map(m => {
+              const parts = m.split(':');
+              const label = parts[0].trim();
+              const value = parts.slice(1).join(':').trim();
+              return `<div class="metric-item">
+                <div class="metric-label">${label}</div>
+                <div class="metric-value">${value}</div>
+              </div>`;
+            }).join('')}
+          </div>
+
+          <div class="analysis-section">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 10.26 24 10.27 17.27 16.5 20.16 24.77 12 19.54 3.84 24.77 6.73 16.5 0 10.27 8.91 10.26 12 2"></polygon>
+              </svg>
+              Primary Concerns
+            </h3>
+            ${concerns.map(c => `<div class="analysis-item concern">${c}</div>`).join('')}
+          </div>
+
+          <div class="analysis-section">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Positive Factors
+            </h3>
+            ${positive.map(p => `<div class="analysis-item positive">${p}</div>`).join('')}
+          </div>
+
+          <div class="analysis-section">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+              Recommendations
+            </h3>
+            ${recommendations.map(r => `<div class="analysis-item">${r}</div>`).join('')}
+          </div>
+
+          <div class="recommendation-box">
+            <h3>
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Final Assessment
+            </h3>
+            <p>${conclusion}</p>
           </div>
         `;
       } catch (error) {
-        resultDiv.classList.remove('loading');
-        resultDiv.classList.add('error');
-        resultDiv.innerHTML = `❌ Error: ${error.message}`;
+        resultCard.innerHTML = `<div class="error">Error: ${error.message}</div>`;
       }
     }
   </script>
