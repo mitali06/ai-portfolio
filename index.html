@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Portfolio - Mitali Kasurde</title>
+  <title>Financial Risk Assessment Tool</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
@@ -21,7 +21,7 @@
       background: white;
       border-radius: 16px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
       padding: 2.5rem;
     }
@@ -42,42 +42,76 @@
       font-size: 14px;
     }
     
-    .demo {
+    .form-section {
       background: #f8f9fa;
       padding: 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
     }
     
-    .demo label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
+    .form-section h3 {
+      font-size: 16px;
       color: #333;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
-    textarea {
-      width: 100%;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .label-hint {
+      font-size: 11px;
+      color: #999;
+      font-weight: normal;
+    }
+    
+    input, select {
       padding: 0.75rem;
       border: 2px solid #e0e0e0;
       border-radius: 8px;
       font-family: inherit;
       font-size: 14px;
-      resize: vertical;
-      min-height: 80px;
       transition: border-color 0.3s;
     }
     
-    textarea:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    input[type="number"] {
+      font-size: 14px;
     }
     
     .button-group {
       display: flex;
-      gap: 0.75rem;
-      margin-top: 1rem;
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
     
     button {
@@ -114,34 +148,117 @@
       background: #d0d0d0;
     }
     
-    .output {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: #f0f4ff;
-      border-left: 4px solid #667eea;
-      border-radius: 8px;
+    .result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: 12px;
       display: none;
+      animation: slideIn 0.4s ease-out;
     }
     
-    .output.show {
+    .result.show {
       display: block;
     }
     
-    .output.loading {
-      color: #666;
-      font-style: italic;
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
-    .output.error {
+    .result.loading {
+      background: #e3f2fd;
+      color: #1976d2;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .result.error {
       background: #ffebee;
-      border-left-color: #e53935;
+      border-left: 4px solid #e53935;
       color: #c62828;
     }
     
-    .output.success {
+    .result.success {
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+    }
+    
+    .risk-score {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .risk-meter {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      color: white;
+      margin-right: 1rem;
+      min-width: 80px;
+    }
+    
+    .risk-meter.high {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    }
+    
+    .risk-meter.medium {
+      background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
+    }
+    
+    .risk-meter.low {
+      background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+    }
+    
+    .risk-details {
+      flex: 1;
+    }
+    
+    .risk-label {
+      font-size: 12px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .risk-category {
+      font-size: 18px;
+      font-weight: 600;
       color: #333;
-      line-height: 1.6;
-      white-space: pre-wrap;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .concern-item {
+      background: rgba(0, 0, 0, 0.03);
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .concern-item strong {
+      color: #667eea;
     }
     
     .footer {
@@ -152,79 +269,245 @@
       font-size: 12px;
       color: #999;
     }
+    
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🤖 AI Portfolio</h1>
-      <p>Powered by Claude AI</p>
+      <h1>💰 Financial Risk Assessment</h1>
+      <p>AI-powered loan application risk analysis</p>
     </div>
 
-    <div class="demo">
-      <label for="input">Ask me anything or paste text to analyze:</label>
-      <textarea id="input" placeholder="E.g., 'Analyze the sentiment of this review...' or 'What are trends in AI?'"></textarea>
-      <div class="button-group">
-        <button class="btn-primary" onclick="sendRequest()">Submit</button>
-        <button class="btn-secondary" onclick="clearAll()">Clear</button>
+    <form onsubmit="assessRisk(event)">
+      <!-- Personal Information -->
+      <div class="form-section">
+        <h3>👤 Personal Information</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Annual Income <span class="label-hint">(USD)</span></label>
+            <input type="number" id="income" placeholder="e.g., 75000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Age <span class="label-hint">(Years)</span></label>
+            <input type="number" id="age" placeholder="e.g., 35" min="18" max="100" required>
+          </div>
+          <div class="form-group">
+            <label>Employment History <span class="label-hint">(Years)</span></label>
+            <input type="number" id="employment" placeholder="e.g., 5" min="0" max="70" required>
+          </div>
+          <div class="form-group">
+            <label>Employment Status</label>
+            <select id="employment-status" required>
+              <option value="">Select status...</option>
+              <option value="Employed">Employed</option>
+              <option value="Self-Employed">Self-Employed</option>
+              <option value="Retired">Retired</option>
+              <option value="Unemployed">Unemployed</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="output" id="output"></div>
+      <!-- Financial Information -->
+      <div class="form-section">
+        <h3>💳 Financial Information</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Credit Score <span class="label-hint">(300-850)</span></label>
+            <input type="number" id="credit-score" placeholder="e.g., 720" min="300" max="850" required>
+          </div>
+          <div class="form-group">
+            <label>Total Debt <span class="label-hint">(USD)</span></label>
+            <input type="number" id="total-debt" placeholder="e.g., 30000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Monthly Expenses <span class="label-hint">(USD)</span></label>
+            <input type="number" id="monthly-expenses" placeholder="e.g., 3500" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Savings Balance <span class="label-hint">(USD)</span></label>
+            <input type="number" id="savings" placeholder="e.g., 15000" min="0" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loan Details -->
+      <div class="form-section">
+        <h3>📋 Loan Details</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Loan Amount <span class="label-hint">(USD)</span></label>
+            <input type="number" id="loan-amount" placeholder="e.g., 50000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Loan Purpose</label>
+            <select id="loan-purpose" required>
+              <option value="">Select purpose...</option>
+              <option value="Home Purchase">Home Purchase</option>
+              <option value="Auto Purchase">Auto Purchase</option>
+              <option value="Debt Consolidation">Debt Consolidation</option>
+              <option value="Business Expansion">Business Expansion</option>
+              <option value="Education">Education</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Loan Term <span class="label-hint">(Years)</span></label>
+            <input type="number" id="loan-term" placeholder="e.g., 5" min="1" max="30" required>
+          </div>
+          <div class="form-group">
+            <label>Previous Defaults</label>
+            <select id="previous-defaults" required>
+              <option value="">Select...</option>
+              <option value="0">None</option>
+              <option value="1">1 (Paid off)</option>
+              <option value="2">2 (Paid off)</option>
+              <option value="3+">3+ (Paid off)</option>
+              <option value="Current">Current Default</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-primary">🔍 Analyze Risk</button>
+        <button type="reset" class="btn-secondary">Clear Form</button>
+      </div>
+    </form>
+
+    <div class="result" id="result"></div>
 
     <div class="footer">
-      <p>✨ Built with Claude API | Vercel</p>
+      <p>✨ Powered by Claude AI | This is a demo tool for educational purposes</p>
     </div>
   </div>
 
   <script>
-    async function sendRequest() {
-      const input = document.getElementById('input').value;
-      const output = document.getElementById('output');
+    async function assessRisk(event) {
+      event.preventDefault();
 
-      if (!input.trim()) {
-        output.classList.add('show', 'error');
-        output.textContent = '⚠️ Please enter some text';
-        return;
-      }
+      const income = document.getElementById('income').value;
+      const age = document.getElementById('age').value;
+      const employment = document.getElementById('employment').value;
+      const employmentStatus = document.getElementById('employment-status').value;
+      const creditScore = document.getElementById('credit-score').value;
+      const totalDebt = document.getElementById('total-debt').value;
+      const monthlyExpenses = document.getElementById('monthly-expenses').value;
+      const savings = document.getElementById('savings').value;
+      const loanAmount = document.getElementById('loan-amount').value;
+      const loanPurpose = document.getElementById('loan-purpose').value;
+      const loanTerm = document.getElementById('loan-term').value;
+      const previousDefaults = document.getElementById('previous-defaults').value;
 
-      output.classList.add('show', 'loading');
-      output.classList.remove('error', 'success');
-      output.textContent = '⏳ Processing...';
+      const resultDiv = document.getElementById('result');
+      resultDiv.classList.add('show', 'loading');
+      resultDiv.classList.remove('error', 'success');
+      resultDiv.innerHTML = '<span class="spinner"></span>Analyzing financial risk...';
+
+      const prompt = `You are a financial risk assessment expert. Analyze this loan application and provide a comprehensive risk assessment.
+
+APPLICANT FINANCIAL PROFILE:
+- Annual Income: $${income}
+- Age: ${age} years
+- Employment: ${employment} years as ${employmentStatus}
+- Credit Score: ${creditScore}/850
+- Current Total Debt: $${totalDebt}
+- Monthly Expenses: $${monthlyExpenses}
+- Savings: $${savings}
+
+LOAN REQUEST:
+- Loan Amount: $${loanAmount}
+- Purpose: ${loanPurpose}
+- Term: ${loanTerm} years
+- Previous Defaults: ${previousDefaults}
+
+PROVIDE YOUR ANALYSIS IN THIS EXACT FORMAT:
+
+RISK LEVEL: [HIGH/MEDIUM/LOW]
+RISK PERCENTAGE: [0-100]%
+
+KEY METRICS:
+- Debt-to-Income Ratio: [calculation]
+- Loan-to-Income Ratio: [calculation]
+- Monthly Debt Payment: $[estimate]
+- Financial Cushion (Savings/Monthly Expenses): [ratio]
+
+PRIMARY CONCERNS:
+[List 3-4 specific risk factors]
+
+POSITIVE FACTORS:
+[List 2-3 strengths]
+
+RECOMMENDATIONS:
+[Provide 3-4 actionable recommendations]
+
+CONCLUSION:
+[2-3 sentence summary with final recommendation]`;
 
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: input })
+          body: JSON.stringify({ message: prompt })
         });
 
         if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+          throw new Error(`HTTP ${response.status}`);
         }
 
         const data = await response.json();
-        output.classList.remove('loading', 'error');
-        output.classList.add('success');
-        output.textContent = data.reply;
+        const analysis = data.reply;
+
+        // Parse risk level and percentage
+        const riskLevelMatch = analysis.match(/RISK LEVEL:\s*(\w+)/i);
+        const riskPercentageMatch = analysis.match(/RISK PERCENTAGE:\s*(\d+)/i);
+        
+        const riskLevel = riskLevelMatch ? riskLevelMatch[1].toUpperCase() : 'MEDIUM';
+        const riskPercentage = riskPercentageMatch ? parseInt(riskPercentageMatch[1]) : 50;
+
+        let riskClass = 'medium';
+        if (riskPercentage < 40) riskClass = 'low';
+        else if (riskPercentage > 65) riskClass = 'high';
+
+        resultDiv.classList.remove('loading');
+        resultDiv.classList.add('success');
+        resultDiv.innerHTML = `
+          <div class="risk-score">
+            <div class="risk-meter ${riskClass}">
+              ${riskPercentage}%
+            </div>
+            <div class="risk-details">
+              <div class="risk-label">Overall Risk Assessment</div>
+              <div class="risk-category">${riskLevel} RISK</div>
+            </div>
+          </div>
+
+          <div style="white-space: pre-wrap; line-height: 1.6; color: #333; font-size: 14px;">
+            ${analysis}
+          </div>
+        `;
       } catch (error) {
-        output.classList.remove('loading', 'success');
-        output.classList.add('error');
-        output.textContent = `❌ ${error.message}`;
+        resultDiv.classList.remove('loading');
+        resultDiv.classList.add('error');
+        resultDiv.innerHTML = `❌ Error: ${error.message}`;
       }
     }
-
-    function clearAll() {
-      document.getElementById('input').value = '';
-      document.getElementById('output').classList.remove('show');
-    }
-
-    // Allow Enter key to submit
-    document.getElementById('input').addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 'Enter') {
-        sendRequest();
-      }
-    });
   </script>
 </body>
 </html>
