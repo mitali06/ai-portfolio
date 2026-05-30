@@ -27,24 +27,39 @@
       --border-light: #cbd5e1;
     }
     
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+    
     body {
       font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       color: var(--text-primary);
       line-height: 1.6;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
     
     .wrapper {
-      max-width: 1400px;
+      width: 100%;
+      max-width: 650px;
       margin: 0 auto;
       padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     /* Header Section */
     .header {
       margin-bottom: 2.5rem;
       animation: slideDown 0.6s ease-out;
+      width: 100%;
+      text-align: center;
     }
     
     @keyframes slideDown {
@@ -61,6 +76,7 @@
     .brand {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.75rem;
       margin-bottom: 1rem;
     }
@@ -75,6 +91,7 @@
       justify-content: center;
       color: white;
       box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+      flex-shrink: 0;
     }
     
     .brand-icon svg {
@@ -98,23 +115,10 @@
     
     /* Main Layout */
     .main-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    
-    .main-layout:has(.results.hidden) {
-      grid-template-columns: 1fr;
-      max-width: 650px;
-    }
-    
-    @media (max-width: 1024px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-        max-width: 650px;
-        margin: 0 auto;
-      }
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     /* Form Card */
@@ -172,6 +176,7 @@
       margin-bottom: 2rem;
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 1.5rem;
+      text-align: center;
     }
     
     .form-header h2 {
@@ -199,6 +204,7 @@
       margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       padding-bottom: 0.75rem;
       border-bottom: 2px solid var(--border-subtle);
@@ -214,6 +220,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
+    }
+    
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
     
     .form-group {
@@ -260,7 +272,6 @@
       background: #f9fffe;
     }
     
-    /* Floating label effect */
     .form-group input:focus ~ label,
     .form-group input:not(:placeholder-shown) ~ label,
     .form-group select:focus ~ label,
@@ -283,7 +294,6 @@
       cursor: pointer;
     }
     
-    /* Validation States */
     .form-group.error input,
     .form-group.error select {
       border-color: var(--status-danger);
@@ -312,11 +322,6 @@
       background: rgba(16, 185, 129, 0.02);
     }
     
-    .form-group.success input:focus,
-    .form-group.success select:focus {
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-    }
-    
     /* Button Group */
     .button-group {
       display: flex;
@@ -324,6 +329,13 @@
       margin-top: 2rem;
       padding-top: 1.5rem;
       border-top: 1px solid var(--border-subtle);
+      width: 100%;
+    }
+    
+    @media (max-width: 640px) {
+      .button-group {
+        flex-direction: column;
+      }
     }
     
     button {
@@ -339,10 +351,10 @@
       justify-content: center;
       gap: 0.5rem;
       font-family: inherit;
+      flex: 1;
     }
     
     .btn-primary {
-      flex: 1;
       background: linear-gradient(135deg, var(--primary-teal) 0%, var(--accent-cyan) 100%);
       color: white;
       box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
@@ -358,7 +370,6 @@
     }
     
     .btn-secondary {
-      flex: 1;
       background: var(--bg-dark);
       color: var(--text-primary);
       border: 1px solid var(--border-light);
@@ -377,6 +388,8 @@
       border: 1px solid var(--border-subtle);
       padding: 2rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      margin-top: 2rem;
     }
     
     .results.hidden {
@@ -409,12 +422,77 @@
       font-weight: 500;
     }
     
+    /* Skeleton Loader */
+    .skeleton {
+      background: linear-gradient(90deg, var(--border-subtle) 25%, var(--bg-dark) 50%, var(--border-subtle) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 8px;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    .skeleton-line {
+      height: 16px;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+    }
+    
+    .skeleton-block {
+      height: 120px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    
+    /* Success Animation */
+    .success-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-teal) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 40px;
+      animation: successBounce 0.6s ease-out;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    }
+    
+    @keyframes successBounce {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
     /* Results Tabs */
     .results-tabs {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      justify-content: center;
     }
     
     .tab-btn {
@@ -423,13 +501,12 @@
       border: none;
       border-bottom: 2px solid transparent;
       color: var(--text-secondary);
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-size: 12px;
     }
     
     .tab-btn:hover {
@@ -448,6 +525,38 @@
     .tab-content.active {
       display: block;
       animation: fadeInUp 0.3s ease-out;
+    }
+    
+    /* Copy Button */
+    .copy-btn {
+      padding: 0.5rem 0.75rem;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+      margin-left: auto;
+    }
+    
+    .copy-btn:hover {
+      background: var(--border-subtle);
+      color: var(--text-primary);
+    }
+    
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--status-success);
+      border-color: var(--status-success);
+    }
+    
+    .metric-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
     
     /* Risk Score Display */
@@ -566,6 +675,12 @@
       margin-bottom: 0;
     }
     
+    @media (max-width: 640px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
     .metric {
       background: var(--bg-dark);
       padding: 1.25rem;
@@ -670,6 +785,38 @@
       line-height: 1.7;
     }
     
+    /* Export Buttons */
+    .export-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .export-btn {
+      padding: 0.75rem 1.25rem;
+      border: 1.5px solid var(--border-light);
+      background: var(--bg-white);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .export-btn:hover {
+      border-color: var(--primary-teal);
+      color: var(--primary-teal);
+      background: rgba(13, 148, 136, 0.05);
+    }
+    
     .error-box {
       background: rgba(239, 68, 68, 0.05);
       border: 1px solid rgba(239, 68, 68, 0.2);
@@ -686,6 +833,33 @@
       border-top: 1px solid var(--border-subtle);
       font-size: 13px;
       color: var(--text-tertiary);
+      width: 100%;
+    }
+    
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--status-success);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      animation: slideInUp 0.3s ease-out;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -902,10 +1076,59 @@
       progressFill.style.width = percentage + '%';
     }
 
+    function showSuccessAnimation() {
+      const animation = document.createElement('div');
+      animation.className = 'success-animation';
+      animation.innerHTML = '<div class="success-icon">✓</div>';
+      document.body.appendChild(animation);
+      setTimeout(() => animation.remove(), 1000);
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function copyToClipboard(text, buttonElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = buttonElement.textContent;
+        buttonElement.classList.add('copied');
+        buttonElement.textContent = 'Copied!';
+        setTimeout(() => {
+          buttonElement.classList.remove('copied');
+          buttonElement.textContent = originalText;
+        }, 2000);
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    function downloadAsText(analysisData) {
+      let content = `RISKIQ FINANCIAL ASSESSMENT REPORT\n`;
+      content += `Generated: ${new Date().toLocaleString()}\n\n`;
+      content += `RISK LEVEL: ${analysisData.riskLevel}\n`;
+      content += `RISK PERCENTAGE: ${analysisData.riskPercentage}%\n\n`;
+      content += `FINANCIAL PROFILE:\n`;
+      content += `Annual Income: $${analysisData.income}\n`;
+      content += `Credit Score: ${analysisData.creditScore}\n`;
+      content += `Total Debt: $${analysisData.totalDebt}\n\n`;
+      content += analysisData.fullAnalysis;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `RiskIQ_Assessment_${new Date().getTime()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Report downloaded!');
+    }
+
     async function assessRisk(event) {
       event.preventDefault();
 
-      // Validate all fields
       let isValid = true;
       inputs.forEach(input => {
         if (!input.value) {
@@ -935,7 +1158,16 @@
       const resultsDiv = document.getElementById('results');
       resultsDiv.classList.remove('hidden');
       resultsDiv.classList.add('loading');
-      resultsDiv.innerHTML = '<div style="display: flex; align-items: center;"><div class="spinner"></div><div class="loading-text">Analyzing your financial profile...</div></div>';
+      
+      // Skeleton loading
+      resultsDiv.innerHTML = `
+        <div style="width: 100%;">
+          <div class="skeleton skeleton-block"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-block"></div>
+        </div>
+      `;
 
       const prompt = `You are a financial risk assessment expert. Analyze this loan application and provide a comprehensive risk assessment.
 
@@ -989,6 +1221,8 @@ CONCLUSION:
         const data = await response.json();
         const analysis = data.reply;
 
+        showSuccessAnimation();
+
         const riskLevelMatch = analysis.match(/RISK LEVEL:\s*(\w+)/i);
         const riskPercentageMatch = analysis.match(/RISK PERCENTAGE:\s*(\d+)/i);
         
@@ -1037,6 +1271,10 @@ CONCLUSION:
           </div>
 
           <div id="metrics" class="tab-content">
+            <div class="metric-header">
+              <h3 style="margin: 0;">Key Metrics</h3>
+              <button class="copy-btn" onclick="copyToClipboard('${metrics.join('\\n').replace(/'/g, "\\'")}', this)">Copy</button>
+            </div>
             <div class="metrics-grid">
               ${metrics.map(m => {
                 const parts = m.split(':');
@@ -1094,6 +1332,24 @@ CONCLUSION:
               <p>${conclusion}</p>
             </div>
           </div>
+
+          <div class="export-buttons">
+            <button class="export-btn" onclick="downloadAsText({riskLevel: '${riskLevel}', riskPercentage: ${riskPercentage}, income: '${income}', creditScore: '${creditScore}', totalDebt: '${totalDebt}', fullAnalysis: \`${analysis.replace(/`/g, '\\`')}\`})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Report
+            </button>
+            <button class="export-btn" onclick="copyToClipboard(\`${analysis.replace(/`/g, '\\`')}\`, this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              </svg>
+              Copy Results
+            </button>
+          </div>
         `;
       } catch (error) {
         resultsDiv.classList.remove('loading');
@@ -1104,17 +1360,14 @@ CONCLUSION:
     function switchTab(event, tabId) {
       event.preventDefault();
       
-      // Hide all tabs
       document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
       });
       
-      // Remove active from all buttons
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
       });
       
-      // Show selected tab and mark button active
       document.getElementById(tabId).classList.add('active');
       event.target.classList.add('active');
     }
