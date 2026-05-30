@@ -4,262 +4,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RiskIQ - AI Powered Finance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --primary-navy: #1a3a52;
-      --primary-teal: #0ea5e9;
-      --accent-orange: #f59e0b;
-      --accent-amber: #fbbf24;
-      --status-low: #10b981;
-      --status-medium: #f59e0b;
-      --status-high: #ef4444;
-      --status-critical: #dc2626;
-      --bg-light: #f9fafb;
+      --primary-navy: #0f172a;
+      --primary-teal: #0d9488;
+      --accent-cyan: #06b6d4;
+      --accent-orange: #f97316;
+      --status-success: #10b981;
+      --status-warning: #f59e0b;
+      --status-danger: #ef4444;
+      --bg-dark: #f8fafc;
       --bg-white: #ffffff;
-      --text-dark: #1f2937;
-      --text-gray: #6b7280;
-      --text-light: #9ca3af;
-      --border-color: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --border-subtle: #e2e8f0;
+      --border-light: #cbd5e1;
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-dark);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      color: var(--text-primary);
       line-height: 1.6;
+      min-height: 100vh;
     }
     
-    .container {
-      max-width: 1200px;
+    .wrapper {
+      max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
     }
     
-    /* Header */
+    /* Header Section */
     .header {
-      background: linear-gradient(135deg, var(--primary-navy) 0%, #0f2942 100%);
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow-lg);
+      margin-bottom: 2.5rem;
+      animation: slideDown 0.6s ease-out;
     }
     
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .header-left h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    
-    .header-left p {
-      font-size: 14px;
-      opacity: 0.9;
-    }
-    
-    /* Main Content */
-    .content {
-      display: grid;
-      grid-template-columns: 600px 600px;
-      gap: 2rem;
-      justify-content: center;
-      align-items: start;
-    }
-    
-    /* When results section is hidden, center form only */
-    .results-section.hidden {
-      display: none;
-    }
-    
-    .content:has(.results-section.hidden) {
-      grid-template-columns: 600px;
-    }
-    
-    @media (max-width: 1024px) {
-      .content {
-        grid-template-columns: 600px;
-        justify-content: center;
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
     
-    @media (max-width: 768px) {
-      .content {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    /* Form Section */
-    .form-section {
-      background: var(--bg-white);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: var(--shadow-md);
-      width: 100%;
-    }
-    
-    .form-section h2 {
-      font-size: 20px;
-      color: var(--text-dark);
-      margin-bottom: 1.5rem;
+    .brand {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-    }
-    
-    .icon-lg {
-      width: 24px;
-      height: 24px;
-      display: inline-block;
-      flex-shrink: 0;
-    }
-    
-    .form-subsection {
-      margin-bottom: 2rem;
-    }
-    
-    .form-subsection h3 {
-      font-size: 14px;
-      color: var(--text-dark);
-      font-weight: 600;
       margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--primary-navy);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
     
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    
-    .form-grid.full {
-      grid-template-columns: 1fr;
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.5rem;
-    }
-    
-    .label-hint {
-      font-size: 11px;
-      color: var(--text-light);
-      font-weight: normal;
-    }
-    
-    input, select {
-      padding: 0.75rem;
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 14px;
-      transition: all 0.2s;
-      background-color: var(--bg-white);
-    }
-    
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary-teal);
-      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-    }
-    
-    input::placeholder {
-      color: var(--text-light);
-    }
-    
-    /* Buttons */
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-color);
-    }
-    
-    button {
-      flex: 1;
-      padding: 0.875rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary-teal) 0%, var(--accent-cyan) 100%);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-    }
-    
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-amber) 100%);
       color: white;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
     }
     
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+    .brand-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 2.5;
     }
     
-    .btn-primary:active {
-      transform: translateY(0);
+    .brand h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
     }
     
-    .btn-secondary {
-      background: var(--bg-light);
-      color: var(--text-dark);
-      border: 1.5px solid var(--border-color);
+    .header-subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-top: 0.5rem;
     }
     
-    .btn-secondary:hover {
-      background: #f3f4f6;
-      border-color: var(--text-light);
+    /* Main Layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
     }
     
-    /* Results Section */
-    .results-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    .main-layout:has(.results.hidden) {
+      grid-template-columns: 1fr;
+      max-width: 650px;
     }
     
-    .results-section.hidden {
-      display: none;
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+        max-width: 650px;
+        margin: 0 auto;
+      }
     }
     
-    .result-card {
+    /* Form Card */
+    .form-card {
       background: var(--bg-white);
-      border-radius: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
       padding: 2rem;
-      box-shadow: var(--shadow-md);
-      animation: slideIn 0.4s ease-out;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+      width: 100%;
     }
     
-    @keyframes slideIn {
+    @keyframes fadeInUp {
       from {
         opacity: 0;
         transform: translateY(20px);
@@ -270,45 +139,328 @@
       }
     }
     
-    .loading {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: var(--text-gray);
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border-subtle);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-teal) 0%, var(--accent-cyan) 100%);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    .form-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.5rem;
+    }
+    
+    .form-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-header p {
+      font-size: 14px;
+      color: var(--text-tertiary);
+    }
+    
+    .form-section {
+      margin-bottom: 2rem;
+    }
+    
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    
+    .section-title svg {
+      width: 16px;
+      height: 16px;
+      color: var(--primary-teal);
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      transition: all 0.2s ease;
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .form-group input,
+    .form-group select {
+      padding: 0.875rem 0.75rem 0.375rem 0.75rem;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--bg-white);
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    
+    .form-group input::placeholder {
+      color: transparent;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+      background: #f9fffe;
+    }
+    
+    /* Floating label effect */
+    .form-group input:focus ~ label,
+    .form-group input:not(:placeholder-shown) ~ label,
+    .form-group select:focus ~ label,
+    .form-group select:not([value=""]) ~ label {
+      top: -0.25rem;
+      font-size: 11px;
+      color: var(--primary-teal);
+    }
+    
+    .form-group input,
+    .form-group select {
+      order: 2;
+    }
+    
+    .form-group label {
+      order: 1;
+    }
+    
+    .form-group select {
+      cursor: pointer;
+    }
+    
+    /* Validation States */
+    .form-group.error input,
+    .form-group.error select {
+      border-color: var(--status-danger);
+      background: rgba(239, 68, 68, 0.02);
+    }
+    
+    .form-group.error input:focus,
+    .form-group.error select:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+    
+    .error-message {
+      font-size: 12px;
+      color: var(--status-danger);
+      margin-top: 0.25rem;
+      display: none;
+    }
+    
+    .form-group.error .error-message {
+      display: block;
+    }
+    
+    .form-group.success input,
+    .form-group.success select {
+      border-color: var(--status-success);
+      background: rgba(16, 185, 129, 0.02);
+    }
+    
+    .form-group.success input:focus,
+    .form-group.success select:focus {
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    
+    /* Button Group */
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    
+    button {
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit;
+    }
+    
+    .btn-primary {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary-teal) 0%, var(--accent-cyan) 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      flex: 1;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+    
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      border-color: var(--text-tertiary);
+    }
+    
+    /* Results Section */
+    .results {
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+      background: var(--bg-white);
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .results.hidden {
+      display: none;
+    }
+    
+    .results.loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
     }
     
     .spinner {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(14, 165, 233, 0.2);
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(13, 148, 136, 0.2);
       border-radius: 50%;
       border-top-color: var(--primary-teal);
       animation: spin 0.8s linear infinite;
-      margin-right: 0.75rem;
-      vertical-align: middle;
+      margin-right: 1rem;
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
     
-    .error {
-      background: #fee2e2;
-      color: var(--status-high);
-      padding: 1.5rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--status-high);
+    .loading-text {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    /* Results Tabs */
+    .results-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    
+    .tab-btn {
+      padding: 0.75rem 1rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 12px;
+    }
+    
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+    
+    .tab-btn.active {
+      color: var(--primary-teal);
+      border-bottom-color: var(--primary-teal);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeInUp 0.3s ease-out;
     }
     
     /* Risk Score Display */
-    .risk-score-display {
+    .risk-display {
       text-align: center;
       margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
     }
     
     .risk-gauge {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
       margin: 0 auto 1.5rem;
       position: relative;
       display: flex;
@@ -321,12 +473,33 @@
       inset: 0;
       border-radius: 50%;
       background: conic-gradient(
-        var(--status-low) 0deg,
-        var(--status-medium) 90deg,
-        var(--status-high) 180deg,
-        var(--status-critical) 270deg
+        var(--status-success) 0deg,
+        var(--status-warning) 120deg,
+        var(--status-danger) 240deg
       );
-      opacity: 0.15;
+      opacity: 0.1;
+    }
+    
+    .risk-gauge-progress {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--primary-teal) 0deg,
+        var(--primary-teal) 0deg,
+        transparent 0deg
+      );
+      animation: fillGauge 1.5s ease-out forwards;
+    }
+    
+    @keyframes fillGauge {
+      from {
+        background: conic-gradient(
+          var(--primary-teal) 0deg,
+          var(--primary-teal) 0deg,
+          transparent 0deg
+        );
+      }
     }
     
     .risk-gauge-value {
@@ -335,47 +508,54 @@
       text-align: center;
     }
     
-    .risk-gauge-number {
-      font-size: 52px;
+    .risk-number {
+      font-size: 48px;
       font-weight: 700;
       color: var(--primary-navy);
-      line-height: 1;
+      animation: slideUp 0.6s ease-out 0.3s both;
     }
     
-    .risk-gauge-max {
-      font-size: 14px;
-      color: var(--text-light);
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .risk-max {
+      font-size: 13px;
+      color: var(--text-tertiary);
       margin-top: 0.25rem;
     }
     
     .risk-badge {
       display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      animation: slideUp 0.6s ease-out 0.4s both;
     }
     
     .risk-badge.low {
-      background-color: #dcfce7;
-      color: var(--status-low);
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--status-success);
     }
     
     .risk-badge.medium {
-      background-color: #fef3c7;
-      color: var(--status-medium);
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--status-warning);
     }
     
     .risk-badge.high {
-      background-color: #fee2e2;
-      color: var(--status-high);
-    }
-    
-    .risk-badge.critical {
-      background-color: #fecaca;
-      color: var(--status-critical);
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--status-danger);
     }
     
     /* Metrics Grid */
@@ -383,28 +563,29 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
     }
     
-    .metric-item {
-      background: var(--bg-light);
-      padding: 1rem;
-      border-radius: 8px;
+    .metric {
+      background: var(--bg-dark);
+      padding: 1.25rem;
+      border-radius: 12px;
       border-left: 3px solid var(--primary-teal);
     }
     
     .metric-label {
       font-size: 12px;
-      color: var(--text-light);
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
     }
     
     .metric-value {
       font-size: 18px;
       font-weight: 700;
-      color: var(--text-dark);
+      color: var(--text-primary);
     }
     
     /* Analysis Sections */
@@ -413,53 +594,62 @@
     }
     
     .analysis-section h3 {
-      font-size: 14px;
-      color: var(--text-dark);
-      font-weight: 600;
-      margin-bottom: 1rem;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: var(--primary-navy);
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    
+    .analysis-section h3 svg {
+      width: 16px;
+      height: 16px;
+      color: var(--primary-teal);
     }
     
     .analysis-item {
-      background: var(--bg-light);
+      background: var(--bg-dark);
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 0.75rem;
       border-left: 3px solid var(--accent-orange);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
+      color: var(--text-secondary);
     }
     
     .analysis-item.concern {
-      border-left-color: var(--status-high);
+      border-left-color: var(--status-danger);
     }
     
     .analysis-item.positive {
-      border-left-color: var(--status-low);
+      border-left-color: var(--status-success);
     }
     
     .analysis-item strong {
-      color: var(--primary-navy);
+      color: var(--text-primary);
+      font-weight: 600;
     }
     
-    /* Recommendation */
-    .recommendation-box {
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border: 1.5px solid var(--primary-teal);
-      border-radius: 8px;
+    /* Assessment Box */
+    .assessment-box {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      border-radius: 12px;
       padding: 1.5rem;
       margin-top: 2rem;
     }
     
-    .recommendation-box h3 {
-      font-size: 14px;
-      color: var(--primary-navy);
-      font-weight: 600;
+    .assessment-box h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 1rem;
@@ -468,130 +658,161 @@
       gap: 0.5rem;
     }
     
-    .recommendation-box p {
+    .assessment-box h3 svg {
+      width: 16px;
+      height: 16px;
+      color: var(--primary-teal);
+    }
+    
+    .assessment-box p {
       font-size: 14px;
-      color: var(--text-dark);
-      line-height: 1.6;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .error-box {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--status-danger);
+      padding: 1.5rem;
+      border-radius: 8px;
     }
     
     /* Footer */
     .footer {
       text-align: center;
       margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-color);
-      font-size: 12px;
-      color: var(--text-light);
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-tertiary);
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrapper">
     <!-- Header -->
     <div class="header">
-      <div class="header-content">
-        <div class="header-left">
-          <h1>RiskIQ</h1>
-          <p>AI Powered Finance</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="content">
-      <!-- Form Section -->
-      <div class="form-section">
-        <h2>
-          <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
             <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          Risk Assessment Form
-        </h2>
-        
+        </div>
+        <h1>RiskIQ</h1>
+      </div>
+      <p class="header-subtitle">AI Powered Finance</p>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Form Section -->
+      <div class="form-card">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-label">Form Progress</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 33%"></div>
+          </div>
+        </div>
+
+        <div class="form-header">
+          <h2>Assessment Form</h2>
+          <p>Fill in your financial details for a comprehensive risk analysis</p>
+        </div>
+
         <form id="riskForm" onsubmit="assessRisk(event)">
           <!-- Personal Information -->
-          <div class="form-subsection">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="form-section">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               Personal Information
-            </h3>
+            </div>
             <div class="form-grid">
               <div class="form-group">
-                <label>Annual Income <span class="label-hint">(USD)</span></label>
-                <input type="number" id="income" placeholder="75000" min="0" required>
+                <input type="number" id="income" placeholder=" " min="0" required>
+                <label for="income">Annual Income (USD)</label>
+                <span class="error-message">Please enter a valid income</span>
               </div>
               <div class="form-group">
-                <label>Age <span class="label-hint">(Years)</span></label>
-                <input type="number" id="age" placeholder="35" min="18" max="100" required>
+                <input type="number" id="age" placeholder=" " min="18" max="100" required>
+                <label for="age">Age (Years)</label>
+                <span class="error-message">Please enter a valid age</span>
               </div>
               <div class="form-group">
-                <label>Employment History <span class="label-hint">(Years)</span></label>
-                <input type="number" id="employment" placeholder="5" min="0" max="70" required>
+                <input type="number" id="employment" placeholder=" " min="0" max="70" required>
+                <label for="employment">Employment History (Years)</label>
+                <span class="error-message">Please enter a valid number</span>
               </div>
               <div class="form-group">
-                <label>Employment Status</label>
                 <select id="employment-status" required>
-                  <option value="">Select status...</option>
+                  <option value=""></option>
                   <option value="Employed">Employed</option>
                   <option value="Self-Employed">Self-Employed</option>
                   <option value="Retired">Retired</option>
                   <option value="Unemployed">Unemployed</option>
                 </select>
+                <label for="employment-status">Employment Status</label>
+                <span class="error-message">Please select a status</span>
               </div>
             </div>
           </div>
 
           <!-- Financial Information -->
-          <div class="form-subsection">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="form-section">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="2" y="5" width="20" height="14" rx="2"></rect>
                 <path d="M2 10h20"></path>
               </svg>
               Financial Information
-            </h3>
+            </div>
             <div class="form-grid">
               <div class="form-group">
-                <label>Credit Score <span class="label-hint">(300-850)</span></label>
-                <input type="number" id="credit-score" placeholder="720" min="300" max="850" required>
+                <input type="number" id="credit-score" placeholder=" " min="300" max="850" required>
+                <label for="credit-score">Credit Score (300-850)</label>
+                <span class="error-message">Please enter a valid score</span>
               </div>
               <div class="form-group">
-                <label>Total Debt <span class="label-hint">(USD)</span></label>
-                <input type="number" id="total-debt" placeholder="30000" min="0" required>
+                <input type="number" id="total-debt" placeholder=" " min="0" required>
+                <label for="total-debt">Total Debt (USD)</label>
+                <span class="error-message">Please enter a valid amount</span>
               </div>
               <div class="form-group">
-                <label>Monthly Expenses <span class="label-hint">(USD)</span></label>
-                <input type="number" id="monthly-expenses" placeholder="3500" min="0" required>
+                <input type="number" id="monthly-expenses" placeholder=" " min="0" required>
+                <label for="monthly-expenses">Monthly Expenses (USD)</label>
+                <span class="error-message">Please enter a valid amount</span>
               </div>
               <div class="form-group">
-                <label>Savings Balance <span class="label-hint">(USD)</span></label>
-                <input type="number" id="savings" placeholder="15000" min="0" required>
+                <input type="number" id="savings" placeholder=" " min="0" required>
+                <label for="savings">Savings Balance (USD)</label>
+                <span class="error-message">Please enter a valid amount</span>
               </div>
             </div>
           </div>
 
           <!-- Loan Details -->
-          <div class="form-subsection">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="form-section">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2v20m10-10H2"></path>
                 <rect x="3" y="3" width="18" height="18" rx="2"></rect>
               </svg>
               Loan Details
-            </h3>
+            </div>
             <div class="form-grid">
               <div class="form-group">
-                <label>Loan Amount <span class="label-hint">(USD)</span></label>
-                <input type="number" id="loan-amount" placeholder="50000" min="0" required>
+                <input type="number" id="loan-amount" placeholder=" " min="0" required>
+                <label for="loan-amount">Loan Amount (USD)</label>
+                <span class="error-message">Please enter a valid amount</span>
               </div>
               <div class="form-group">
-                <label>Loan Purpose</label>
                 <select id="loan-purpose" required>
-                  <option value="">Select purpose...</option>
+                  <option value=""></option>
                   <option value="Home Purchase">Home Purchase</option>
                   <option value="Auto Purchase">Auto Purchase</option>
                   <option value="Debt Consolidation">Debt Consolidation</option>
@@ -599,42 +820,44 @@
                   <option value="Education">Education</option>
                   <option value="Other">Other</option>
                 </select>
+                <label for="loan-purpose">Loan Purpose</label>
+                <span class="error-message">Please select a purpose</span>
               </div>
               <div class="form-group">
-                <label>Loan Term <span class="label-hint">(Years)</span></label>
-                <input type="number" id="loan-term" placeholder="5" min="1" max="30" required>
+                <input type="number" id="loan-term" placeholder=" " min="1" max="30" required>
+                <label for="loan-term">Loan Term (Years)</label>
+                <span class="error-message">Please enter a valid term</span>
               </div>
               <div class="form-group">
-                <label>Previous Defaults</label>
                 <select id="previous-defaults" required>
-                  <option value="">Select...</option>
+                  <option value=""></option>
                   <option value="0">None</option>
                   <option value="1">1 (Paid off)</option>
                   <option value="2">2 (Paid off)</option>
                   <option value="3+">3+ (Paid off)</option>
                   <option value="Current">Current Default</option>
                 </select>
+                <label for="previous-defaults">Previous Defaults</label>
+                <span class="error-message">Please select an option</span>
               </div>
             </div>
           </div>
 
           <div class="button-group">
             <button type="submit" class="btn-primary">
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
               Analyze Risk
             </button>
-            <button type="reset" class="btn-secondary">Clear Form</button>
+            <button type="reset" class="btn-secondary">Clear</button>
           </div>
         </form>
       </div>
 
       <!-- Results Section -->
-      <div class="results-section hidden" id="resultsSection">
-        <div class="result-card" id="resultCard"></div>
-      </div>
+      <div class="results hidden" id="results"></div>
     </div>
 
     <!-- Footer -->
@@ -644,8 +867,57 @@
   </div>
 
   <script>
+    // Form validation and progress tracking
+    const form = document.getElementById('riskForm');
+    const inputs = form.querySelectorAll('input, select');
+    const progressFill = document.getElementById('progressFill');
+
+    inputs.forEach(input => {
+      input.addEventListener('blur', validateField);
+      input.addEventListener('change', validateField);
+      input.addEventListener('input', updateProgress);
+    });
+
+    function validateField(e) {
+      const field = e.target;
+      const group = field.closest('.form-group');
+      
+      if (!field.value) {
+        group.classList.add('error');
+        group.classList.remove('success');
+      } else {
+        group.classList.remove('error');
+        group.classList.add('success');
+      }
+      
+      updateProgress();
+    }
+
+    function updateProgress() {
+      let filled = 0;
+      inputs.forEach(input => {
+        if (input.value) filled++;
+      });
+      const percentage = Math.round((filled / inputs.length) * 100);
+      progressFill.style.width = percentage + '%';
+    }
+
     async function assessRisk(event) {
       event.preventDefault();
+
+      // Validate all fields
+      let isValid = true;
+      inputs.forEach(input => {
+        if (!input.value) {
+          isValid = false;
+          input.closest('.form-group').classList.add('error');
+        }
+      });
+
+      if (!isValid) {
+        alert('Please fill in all fields');
+        return;
+      }
 
       const income = document.getElementById('income').value;
       const age = document.getElementById('age').value;
@@ -660,11 +932,10 @@
       const loanTerm = document.getElementById('loan-term').value;
       const previousDefaults = document.getElementById('previous-defaults').value;
 
-      const resultsSection = document.getElementById('resultsSection');
-      const resultCard = document.getElementById('resultCard');
-      
-      resultsSection.classList.remove('hidden');
-      resultCard.innerHTML = '<div class="loading"><span class="spinner"></span>Analyzing financial risk...</div>';
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.classList.remove('hidden');
+      resultsDiv.classList.add('loading');
+      resultsDiv.innerHTML = '<div style="display: flex; align-items: center;"><div class="spinner"></div><div class="loading-text">Analyzing your financial profile...</div></div>';
 
       const prompt = `You are a financial risk assessment expert. Analyze this loan application and provide a comprehensive risk assessment.
 
@@ -713,25 +984,21 @@ CONCLUSION:
           body: JSON.stringify({ message: prompt })
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const data = await response.json();
         const analysis = data.reply;
 
-        // Parse risk level and percentage
         const riskLevelMatch = analysis.match(/RISK LEVEL:\s*(\w+)/i);
         const riskPercentageMatch = analysis.match(/RISK PERCENTAGE:\s*(\d+)/i);
         
         const riskLevel = riskLevelMatch ? riskLevelMatch[1].toUpperCase() : 'MEDIUM';
         const riskPercentage = riskPercentageMatch ? parseInt(riskPercentageMatch[1]) : 50;
 
-        let riskBadgeClass = 'medium';
-        if (riskPercentage < 40) riskBadgeClass = 'low';
-        else if (riskPercentage > 65) riskBadgeClass = 'high';
+        let riskClass = 'medium';
+        if (riskPercentage < 40) riskClass = 'low';
+        else if (riskPercentage > 65) riskClass = 'high';
 
-        // Extract sections
         const metricsMatch = analysis.match(/KEY METRICS:([\s\S]*?)PRIMARY CONCERNS:/i);
         const concernsMatch = analysis.match(/PRIMARY CONCERNS:([\s\S]*?)POSITIVE FACTORS:/i);
         const positiveMatch = analysis.match(/POSITIVE FACTORS:([\s\S]*?)RECOMMENDATIONS:/i);
@@ -744,74 +1011,112 @@ CONCLUSION:
         const recommendations = recommendMatch ? recommendMatch[1].trim().split('\n').filter(l => l.trim()) : [];
         const conclusion = conclusionMatch ? conclusionMatch[1].trim() : '';
 
-        resultCard.innerHTML = `
-          <div class="risk-score-display">
-            <div class="risk-gauge">
-              <div class="risk-gauge-bg"></div>
-              <div class="risk-gauge-value">
-                <div class="risk-gauge-number">${riskPercentage}</div>
-                <div class="risk-gauge-max">/ 100</div>
+        const riskGaugeFill = (riskPercentage / 100) * 360;
+
+        resultsDiv.classList.remove('loading');
+        resultsDiv.innerHTML = `
+          <div class="results-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab(event, 'metrics')">Metrics</button>
+            <button class="tab-btn" onclick="switchTab(event, 'details')">Details</button>
+            <button class="tab-btn" onclick="switchTab(event, 'recommendations')">Recommendations</button>
+          </div>
+
+          <div id="overview" class="tab-content active">
+            <div class="risk-display">
+              <div class="risk-gauge">
+                <div class="risk-gauge-bg"></div>
+                <div class="risk-gauge-progress" style="background: conic-gradient(var(--primary-teal) 0deg, var(--primary-teal) ${riskGaugeFill}deg, transparent ${riskGaugeFill}deg);"></div>
+                <div class="risk-gauge-value">
+                  <div class="risk-number">${riskPercentage}</div>
+                  <div class="risk-max">/ 100</div>
+                </div>
               </div>
+              <div class="risk-badge ${riskClass}">${riskLevel} RISK</div>
             </div>
-            <div class="risk-badge ${riskBadgeClass}">${riskLevel} RISK</div>
           </div>
 
-          <div class="metrics-grid">
-            ${metrics.map(m => {
-              const parts = m.split(':');
-              const label = parts[0].trim();
-              const value = parts.slice(1).join(':').trim();
-              return `<div class="metric-item">
-                <div class="metric-label">${label}</div>
-                <div class="metric-value">${value}</div>
-              </div>`;
-            }).join('')}
+          <div id="metrics" class="tab-content">
+            <div class="metrics-grid">
+              ${metrics.map(m => {
+                const parts = m.split(':');
+                const label = parts[0].trim();
+                const value = parts.slice(1).join(':').trim();
+                return `<div class="metric">
+                  <div class="metric-label">${label}</div>
+                  <div class="metric-value">${value}</div>
+                </div>`;
+              }).join('')}
+            </div>
           </div>
 
-          <div class="analysis-section">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 15.09 10.26 24 10.27 17.27 16.5 20.16 24.77 12 19.54 3.84 24.77 6.73 16.5 0 10.27 8.91 10.26 12 2"></polygon>
-              </svg>
-              Primary Concerns
-            </h3>
-            ${concerns.map(c => `<div class="analysis-item concern">${c}</div>`).join('')}
+          <div id="details" class="tab-content">
+            <div class="analysis-section">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 10.26 24 10.27 17.27 16.5 20.16 24.77 12 19.54 3.84 24.77 6.73 16.5 0 10.27 8.91 10.26 12 2"></polygon>
+                </svg>
+                Concerns
+              </h3>
+              ${concerns.map(c => `<div class="analysis-item concern">${c}</div>`).join('')}
+            </div>
+
+            <div class="analysis-section">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Strengths
+              </h3>
+              ${positive.map(p => `<div class="analysis-item positive">${p}</div>`).join('')}
+            </div>
           </div>
 
-          <div class="analysis-section">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              Positive Factors
-            </h3>
-            ${positive.map(p => `<div class="analysis-item positive">${p}</div>`).join('')}
-          </div>
+          <div id="recommendations" class="tab-content">
+            <div class="analysis-section">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
+                </svg>
+                Recommendations
+              </h3>
+              ${recommendations.map(r => `<div class="analysis-item">${r}</div>`).join('')}
+            </div>
 
-          <div class="analysis-section">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16v-4M12 8h.01"></path>
-              </svg>
-              Recommendations
-            </h3>
-            ${recommendations.map(r => `<div class="analysis-item">${r}</div>`).join('')}
-          </div>
-
-          <div class="recommendation-box">
-            <h3>
-              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              Final Assessment
-            </h3>
-            <p>${conclusion}</p>
+            <div class="assessment-box">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Assessment
+              </h3>
+              <p>${conclusion}</p>
+            </div>
           </div>
         `;
       } catch (error) {
-        resultCard.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+        resultsDiv.classList.remove('loading');
+        resultsDiv.innerHTML = `<div class="error-box">Error: ${error.message}</div>`;
       }
+    }
+
+    function switchTab(event, tabId) {
+      event.preventDefault();
+      
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active from all buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab and mark button active
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
     }
   </script>
 </body>
