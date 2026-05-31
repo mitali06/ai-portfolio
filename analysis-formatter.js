@@ -1,10 +1,22 @@
 // RiskIQ Analysis Parser and Formatter
-// Converts raw Claude API response into structured, professional report data
+// Converts raw Claude API response into structured, professional report format
 
 class RiskIQAnalysisFormatter {
   constructor(rawAnalysis) {
     this.rawAnalysis = rawAnalysis;
     this.parsed = this.parseAnalysis();
+  }
+
+  // Clean markdown and special characters from text
+  cleanText(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*/g, '')           // Remove ** bold markers
+      .replace(/##\s*/g, '')          // Remove ## headers
+      .replace(/^--\s*/gm, '')        // Remove -- list markers
+      .replace(/^- /gm, '')           // Remove standard dashes
+      .replace(/^• /gm, '')           // Remove bullets
+      .trim();
   }
 
   parseAnalysis() {
@@ -27,10 +39,10 @@ class RiskIQAnalysisFormatter {
     // Parse metrics into key-value pairs
     const metrics = this.parseMetrics(metricsSection);
     
-    // Parse list items
-    const concerns = this.parseListItems(concernsSection);
-    const strengths = this.parseListItems(positiveSection);
-    const recommendations = this.parseListItems(recommendationsSection);
+    // Parse list items with structured data
+    const concerns = this.parseStructuredItems(concernsSection);
+    const strengths = this.parseStructuredItems(positiveSection);
+    const recommendations = this.parseStructuredItems(recommendationsSection);
     
     return {
       riskLevel,
@@ -39,7 +51,7 @@ class RiskIQAnalysisFormatter {
       concerns,
       strengths,
       recommendations,
-      conclusion: conclusionSection.trim()
+      conclusion: this.cleanText(conclusionSection)
     };
   }
 
@@ -66,29 +78,110 @@ class RiskIQAnalysisFormatter {
     const lines = metricsText.split('\n').filter(line => line.trim());
     
     lines.forEach(line => {
+      // Match patterns like "- Label: value" or "- Label: description with numbers"
       const match = line.match(/^[-•]\s*(.+?):\s*(.+)$/);
       if (match) {
-        metrics.push({
-          label: match[1].trim(),
-          value: match[2].trim()
-        });
+        let label = match[1].trim();
+        let value = match[2].trim();
+        
+        // Clean markdown and special characters
+        label = this.cleanText(label);
+        value = this.cleanText(value);
+        
+        // Extract just the final result/number from complex calculations
+        value = this.extractFinalResult(value);
+        
+        if (label && value) {
+          metrics.push({
+            label: label,
+            value: value
+          });
+        }
       }
     });
     
     return metrics;
   }
 
-  parseListItems(listText) {
+  // Extract the final result from a calculation string
+  extractFinalResult(text) {
+    // Remove formula syntax like "x / y = z" and just keep the result part
+    if (text.includes('=')) {
+      const parts = text.split('=');
+      return this.cleanText(parts[parts.length - 1]);
+    }
+    
+    // Look for patterns like "Result: X" or "approximately X"
+    const resultMatch = text.match(/(?:Result:|approximately|is|equals)\s*(.+?)(?:\s*\(|$)/i);
+    if (resultMatch) {
+      return this.cleanText(resultMatch[1]);
+    }
+    
+    // If text is short, return as is (already cleaned)
+    if (text.length < 100) {
+      return text;
+    }
+    
+    // For long text, try to extract the numeric result
+    const numMatch = text.match(/(\d+\.?\d*%|\$[\d,]+\.?\d*|[\d.]+:\d+\.?\d*)/);
+    if (numMatch) {
+      // Return just the number with minimal context
+      const beforeNum = text.substring(0, text.indexOf(numMatch[1]));
+      const afterNum = text.substring(text.indexOf(numMatch[1]) + numMatch[1].length, text.indexOf(numMatch[1]) + 50);
+      return (beforeNum.split(' ').slice(-2).join(' ') + ' ' + numMatch[1] + afterNum).trim();
+    }
+    
+    // Otherwise return cleaned text
+    return text;
+  }
+
+  parseStructuredItems(itemsText) {
     const items = [];
-    const lines = listText.split('\n').filter(line => line.trim());
+    const lines = itemsText.split('\n').filter(line => line.trim());
+    
+    let currentItem = null;
     
     lines.forEach(line => {
-      // Remove bullet points and numbering
-      const cleanLine = line.replace(/^[-•*\d+.]\s*/, '').trim();
-      if (cleanLine) {
-        items.push(cleanLine);
+      const cleanLine = this.cleanText(line);
+      
+      if (!cleanLine) return;
+      
+      // Check if this is a numbered/bulleted main item
+      const isMainItem = /^[\d]+\.|^[-•*]|^[A-Z]/.test(line);
+      
+      if (isMainItem && cleanLine.length > 5) {
+        // Save previous item if exists
+        if (currentItem && (currentItem.title || currentItem.content)) {
+          items.push(currentItem);
+        }
+        
+        // Start new item - extract title and content
+        let fullText = cleanLine;
+        let title = '';
+        let content = '';
+        
+        if (fullText.includes(':')) {
+          const parts = fullText.split(':');
+          title = parts[0].trim();
+          content = parts.slice(1).join(':').trim();
+        } else {
+          content = fullText;
+        }
+        
+        currentItem = {
+          title: title,
+          content: content
+        };
+      } else if (currentItem && cleanLine.length > 0) {
+        // This is a continuation of previous item
+        currentItem.content = (currentItem.content ? currentItem.content + ' ' : '') + cleanLine;
       }
     });
+    
+    // Don't forget the last item
+    if (currentItem && (currentItem.title || currentItem.content)) {
+      items.push(currentItem);
+    }
     
     return items;
   }
@@ -114,40 +207,14 @@ class RiskIQAnalysisFormatter {
     return colors[riskClass];
   }
 
-  getDetailedMetrics() {
-    // Organize metrics into categories
-    const categories = {
-      'Financial Ratios': [],
-      'Payment Information': [],
-      'Safety & Cushion': [],
-      'Other': []
-    };
-
-    this.parsed.metrics.forEach(metric => {
-      const label = metric.label.toLowerCase();
-      
-      if (label.includes('ratio') || label.includes('income')) {
-        categories['Financial Ratios'].push(metric);
-      } else if (label.includes('payment') || label.includes('debt')) {
-        categories['Payment Information'].push(metric);
-      } else if (label.includes('cushion') || label.includes('savings')) {
-        categories['Safety & Cushion'].push(metric);
-      } else {
-        categories['Other'].push(metric);
-      }
-    });
-
-    return categories;
-  }
-
   getSummary() {
     return {
       riskLevel: this.parsed.riskLevel,
       riskPercentage: this.parsed.riskPercentage,
       conclusion: this.parsed.conclusion,
-      topConcern: this.parsed.concerns[0] || 'No concerns identified',
-      topStrength: this.parsed.strengths[0] || 'No strengths identified',
-      topRecommendation: this.parsed.recommendations[0] || 'No recommendations'
+      topConcern: this.parsed.concerns[0]?.content || 'No concerns identified',
+      topStrength: this.parsed.strengths[0]?.content || 'No strengths identified',
+      topRecommendation: this.parsed.recommendations[0]?.content || 'No recommendations'
     };
   }
 }

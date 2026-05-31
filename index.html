@@ -635,6 +635,19 @@
       color: var(--text-secondary);
     }
     
+    .item-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 15px;
+    }
+    
+    .item-content {
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
     .list-item.concern {
       border-left-color: var(--status-danger);
       background: rgba(239, 68, 68, 0.03);
@@ -681,6 +694,24 @@
       font-size: 15px;
       color: var(--text-secondary);
       line-height: 1.8;
+    }
+    
+    .decision-guide {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(13, 148, 136, 0.2);
+    }
+    
+    .decision-guide p {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    
+    .decision-guide strong {
+      font-weight: 700;
+      color: var(--text-primary);
     }
     
     /* Export Buttons */
@@ -1053,6 +1084,27 @@
       const riskClass = formatter.getRiskClass();
       const riskGaugeFill = (report.riskPercentage / 100) * 360;
 
+      // Function to render structured items with titles
+      const renderItem = (item, className) => {
+        if (typeof item === 'string') {
+          // Handle simple string items
+          return `<div class="list-item ${className}">${item}</div>`;
+        }
+        
+        // Handle structured items with title and content
+        if (item.title) {
+          return `
+            <div class="list-item ${className}">
+              <div class="item-title">${item.title}</div>
+              <div class="item-content">${item.content}</div>
+            </div>
+          `;
+        }
+        
+        // Fallback to content only
+        return `<div class="list-item ${className}">${item.content}</div>`;
+      };
+
       let html = `
         <div class="report-header">
           <h2 class="report-title">Financial Risk Assessment Report</h2>
@@ -1100,9 +1152,7 @@
             </div>
             <h3>Risk Factors & Concerns</h3>
           </div>
-          ${report.concerns.map(concern => `
-            <div class="list-item concern">${concern}</div>
-          `).join('')}
+          ${report.concerns.map(concern => renderItem(concern, 'concern')).join('')}
         </div>
 
         <div class="report-section">
@@ -1114,9 +1164,7 @@
             </div>
             <h3>Positive Factors & Strengths</h3>
           </div>
-          ${report.strengths.map(strength => `
-            <div class="list-item strength">${strength}</div>
-          `).join('')}
+          ${report.strengths.map(strength => renderItem(strength, 'strength')).join('')}
         </div>
 
         <div class="report-section">
@@ -1129,9 +1177,7 @@
             </div>
             <h3>Recommended Actions</h3>
           </div>
-          ${report.recommendations.map(rec => `
-            <div class="list-item recommendation">${rec}</div>
-          `).join('')}
+          ${report.recommendations.map(rec => renderItem(rec, 'recommendation')).join('')}
         </div>
 
         <div class="conclusion-box">
@@ -1139,9 +1185,15 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Final Assessment
+            Final Assessment & Recommendation
           </h4>
           <p>${report.conclusion}</p>
+          <div class="decision-guide">
+            <p><strong>Risk Summary:</strong> This applicant presents a <strong>${report.riskLevel.toLowerCase()}</strong> risk profile with a risk score of <strong>${report.riskPercentage}%</strong>.</p>
+            ${report.riskLevel === 'LOW' ? '<p><strong>Recommendation:</strong> Proceed with the loan application. The applicant demonstrates strong financial stability and favorable terms.</p>' : ''}
+            ${report.riskLevel === 'MEDIUM' ? '<p><strong>Recommendation:</strong> Proceed with caution. Consider requesting additional information or adjusting terms to mitigate identified risk factors.</p>' : ''}
+            ${report.riskLevel === 'HIGH' ? '<p><strong>Recommendation:</strong> Exercise significant caution. Strong consideration should be given to declining the application or requiring substantial risk mitigation measures before approval.</p>' : ''}
+          </div>
         </div>
 
         <div class="export-buttons">
