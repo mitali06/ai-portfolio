@@ -46,7 +46,7 @@
     
     .wrapper {
       width: 100%;
-      max-width: 650px;
+      max-width: 750px;
       margin: 0 auto;
       padding: 2rem;
       display: flex;
@@ -380,7 +380,7 @@
       border-color: var(--text-tertiary);
     }
     
-    /* Results Section */
+    /* Results Report */
     .results {
       animation: fadeInUp 0.6s ease-out 0.2s both;
       background: var(--bg-white);
@@ -422,154 +422,40 @@
       font-weight: 500;
     }
     
-    /* Skeleton Loader */
-    .skeleton {
-      background: linear-gradient(90deg, var(--border-subtle) 25%, var(--bg-dark) 50%, var(--border-subtle) 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      border-radius: 8px;
-    }
-    
-    @keyframes loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    
-    .skeleton-line {
-      height: 16px;
-      margin-bottom: 1rem;
-      border-radius: 4px;
-    }
-    
-    .skeleton-block {
-      height: 120px;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-    }
-    
-    /* Success Animation */
-    .success-animation {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1000;
-      pointer-events: none;
-    }
-    
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-teal) 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 40px;
-      animation: successBounce 0.6s ease-out;
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-    }
-    
-    @keyframes successBounce {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-    
-    /* Results Tabs */
-    .results-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .tab-btn {
-      padding: 0.75rem 1rem;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid transparent;
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .tab-btn:hover {
-      color: var(--text-primary);
-    }
-    
-    .tab-btn.active {
-      color: var(--primary-teal);
-      border-bottom-color: var(--primary-teal);
-    }
-    
-    .tab-content {
-      display: none;
-    }
-    
-    .tab-content.active {
-      display: block;
-      animation: fadeInUp 0.3s ease-out;
-    }
-    
-    /* Copy Button */
-    .copy-btn {
-      padding: 0.5rem 0.75rem;
-      background: var(--bg-dark);
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: var(--text-secondary);
-      margin-left: auto;
-    }
-    
-    .copy-btn:hover {
-      background: var(--border-subtle);
-      color: var(--text-primary);
-    }
-    
-    .copy-btn.copied {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--status-success);
-      border-color: var(--status-success);
-    }
-    
-    .metric-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-    
-    /* Risk Score Display */
-    .risk-display {
+    /* Report Header */
+    .report-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    
+    .report-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .report-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Risk Summary Card */
+    .risk-summary {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
     }
     
     .risk-gauge {
-      width: 160px;
-      height: 160px;
+      width: 140px;
+      height: 140px;
       margin: 0 auto 1.5rem;
       position: relative;
       display: flex;
@@ -593,11 +479,6 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: conic-gradient(
-        var(--primary-teal) 0deg,
-        var(--primary-teal) 0deg,
-        transparent 0deg
-      );
       animation: fillGauge 1.5s ease-out forwards;
     }
     
@@ -618,7 +499,7 @@
     }
     
     .risk-number {
-      font-size: 48px;
+      font-size: 44px;
       font-weight: 700;
       color: var(--primary-navy);
       animation: slideUp 0.6s ease-out 0.3s both;
@@ -636,43 +517,80 @@
     }
     
     .risk-max {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-tertiary);
       margin-top: 0.25rem;
     }
     
-    .risk-badge {
+    .risk-level-badge {
       display: inline-block;
-      padding: 0.5rem 1.25rem;
+      padding: 0.6rem 1.5rem;
       border-radius: 8px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       animation: slideUp 0.6s ease-out 0.4s both;
     }
     
-    .risk-badge.low {
-      background: rgba(16, 185, 129, 0.1);
+    .risk-level-badge.low {
+      background: rgba(16, 185, 129, 0.15);
       color: var(--status-success);
     }
     
-    .risk-badge.medium {
-      background: rgba(245, 158, 11, 0.1);
+    .risk-level-badge.medium {
+      background: rgba(245, 158, 11, 0.15);
       color: var(--status-warning);
     }
     
-    .risk-badge.high {
-      background: rgba(239, 68, 68, 0.1);
+    .risk-level-badge.high {
+      background: rgba(239, 68, 68, 0.15);
       color: var(--status-danger);
+    }
+    
+    /* Report Sections */
+    .report-section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    
+    .section-header-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13, 148, 136, 0.1);
+      border-radius: 8px;
+      color: var(--primary-teal);
+    }
+    
+    .section-header-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .section-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
     }
     
     /* Metrics Grid */
     .metrics-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 0;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
     }
     
     @media (max-width: 640px) {
@@ -681,87 +599,67 @@
       }
     }
     
-    .metric {
-      background: var(--bg-dark);
-      padding: 1.25rem;
-      border-radius: 12px;
+    .metric-card {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
+      border: 1px solid var(--border-subtle);
       border-left: 3px solid var(--primary-teal);
+      padding: 1.25rem;
+      border-radius: 10px;
     }
     
     .metric-label {
       font-size: 12px;
-      color: var(--text-tertiary);
+      font-weight: 600;
+      color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
+      margin-bottom: 0.75rem;
     }
     
     .metric-value {
       font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
+      line-height: 1.3;
     }
     
-    /* Analysis Sections */
-    .analysis-section {
-      margin-bottom: 2rem;
-    }
-    
-    .analysis-section h3 {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--border-subtle);
-    }
-    
-    .analysis-section h3 svg {
-      width: 16px;
-      height: 16px;
-      color: var(--primary-teal);
-    }
-    
-    .analysis-item {
+    /* List Items */
+    .list-item {
       background: var(--bg-dark);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
+      padding: 1.25rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
       border-left: 3px solid var(--accent-orange);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.7;
       color: var(--text-secondary);
     }
     
-    .analysis-item.concern {
+    .list-item.concern {
       border-left-color: var(--status-danger);
+      background: rgba(239, 68, 68, 0.03);
     }
     
-    .analysis-item.positive {
+    .list-item.strength {
       border-left-color: var(--status-success);
+      background: rgba(16, 185, 129, 0.03);
     }
     
-    .analysis-item strong {
-      color: var(--text-primary);
-      font-weight: 600;
+    .list-item.recommendation {
+      border-left-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.03);
     }
     
-    /* Assessment Box */
-    .assessment-box {
-      background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
-      border: 1px solid rgba(13, 148, 136, 0.2);
+    /* Conclusion Box */
+    .conclusion-box {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border: 2px solid rgba(13, 148, 136, 0.3);
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.75rem;
       margin-top: 2rem;
     }
     
-    .assessment-box h3 {
+    .conclusion-box h4 {
       font-size: 13px;
       font-weight: 700;
       color: var(--text-primary);
@@ -773,16 +671,16 @@
       gap: 0.5rem;
     }
     
-    .assessment-box h3 svg {
+    .conclusion-box h4 svg {
       width: 16px;
       height: 16px;
       color: var(--primary-teal);
     }
     
-    .assessment-box p {
-      font-size: 14px;
+    .conclusion-box p {
+      font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.8;
     }
     
     /* Export Buttons */
@@ -790,7 +688,7 @@
       display: flex;
       gap: 1rem;
       margin-top: 2rem;
-      padding-top: 1.5rem;
+      padding-top: 2rem;
       border-top: 1px solid var(--border-subtle);
       flex-wrap: wrap;
       justify-content: center;
@@ -858,6 +756,44 @@
       }
       to {
         transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Success Animation */
+    .success-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-teal) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 40px;
+      animation: successBounce 0.6s ease-out;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    }
+    
+    @keyframes successBounce {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
         opacity: 1;
       }
     }
@@ -1030,7 +966,7 @@
         </form>
       </div>
 
-      <!-- Results Section -->
+      <!-- Results Report -->
       <div class="results hidden" id="results"></div>
     </div>
 
@@ -1039,6 +975,9 @@
       <p>✨ Powered by Claude AI | RiskIQ Assessment Tool</p>
     </div>
   </div>
+
+  <!-- Load Analysis Formatter -->
+  <script src="analysis-formatter.js"></script>
 
   <script>
     // Form validation and progress tracking
@@ -1092,38 +1031,179 @@
       setTimeout(() => toast.remove(), 3000);
     }
 
-    function copyToClipboard(text, buttonElement) {
+    function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
-        const originalText = buttonElement.textContent;
-        buttonElement.classList.add('copied');
-        buttonElement.textContent = 'Copied!';
-        setTimeout(() => {
-          buttonElement.classList.remove('copied');
-          buttonElement.textContent = originalText;
-        }, 2000);
         showToast('Copied to clipboard!');
       });
     }
 
-    function downloadAsText(analysisData) {
-      let content = `RISKIQ FINANCIAL ASSESSMENT REPORT\n`;
-      content += `Generated: ${new Date().toLocaleString()}\n\n`;
-      content += `RISK LEVEL: ${analysisData.riskLevel}\n`;
-      content += `RISK PERCENTAGE: ${analysisData.riskPercentage}%\n\n`;
-      content += `FINANCIAL PROFILE:\n`;
-      content += `Annual Income: $${analysisData.income}\n`;
-      content += `Credit Score: ${analysisData.creditScore}\n`;
-      content += `Total Debt: $${analysisData.totalDebt}\n\n`;
-      content += analysisData.fullAnalysis;
-
+    function downloadAsText(content, filename = 'RiskIQ_Report.txt') {
       const blob = new Blob([content], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `RiskIQ_Assessment_${new Date().getTime()}.txt`;
+      a.download = filename;
       a.click();
       URL.revokeObjectURL(url);
       showToast('Report downloaded!');
+    }
+
+    function buildProfessionalReport(formatter) {
+      const report = formatter.getFormattedReport();
+      const riskClass = formatter.getRiskClass();
+      const riskGaugeFill = (report.riskPercentage / 100) * 360;
+
+      let html = `
+        <div class="report-header">
+          <h2 class="report-title">Financial Risk Assessment Report</h2>
+          <p class="report-subtitle">Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        </div>
+
+        <div class="risk-summary">
+          <div class="risk-gauge">
+            <div class="risk-gauge-bg"></div>
+            <div class="risk-gauge-progress" style="background: conic-gradient(var(--primary-teal) 0deg, var(--primary-teal) ${riskGaugeFill}deg, transparent ${riskGaugeFill}deg);"></div>
+            <div class="risk-gauge-value">
+              <div class="risk-number">${report.riskPercentage}</div>
+              <div class="risk-max">/ 100</div>
+            </div>
+          </div>
+          <div class="risk-level-badge ${riskClass}">${report.riskLevel} Risk</div>
+        </div>
+
+        <div class="report-section">
+          <div class="section-header">
+            <div class="section-header-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <path d="M9 9h6M9 15h6"></path>
+              </svg>
+            </div>
+            <h3>Key Financial Metrics</h3>
+          </div>
+          <div class="metrics-grid">
+            ${report.metrics.map(metric => `
+              <div class="metric-card">
+                <div class="metric-label">${metric.label}</div>
+                <div class="metric-value">${metric.value}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="report-section">
+          <div class="section-header">
+            <div class="section-header-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M2 12h20"></path>
+              </svg>
+            </div>
+            <h3>Risk Factors & Concerns</h3>
+          </div>
+          ${report.concerns.map(concern => `
+            <div class="list-item concern">${concern}</div>
+          `).join('')}
+        </div>
+
+        <div class="report-section">
+          <div class="section-header">
+            <div class="section-header-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h3>Positive Factors & Strengths</h3>
+          </div>
+          ${report.strengths.map(strength => `
+            <div class="list-item strength">${strength}</div>
+          `).join('')}
+        </div>
+
+        <div class="report-section">
+          <div class="section-header">
+            <div class="section-header-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+            </div>
+            <h3>Recommended Actions</h3>
+          </div>
+          ${report.recommendations.map(rec => `
+            <div class="list-item recommendation">${rec}</div>
+          `).join('')}
+        </div>
+
+        <div class="conclusion-box">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Final Assessment
+          </h4>
+          <p>${report.conclusion}</p>
+        </div>
+
+        <div class="export-buttons">
+          <button class="export-btn" onclick="downloadAsText(\`${buildTextReport(formatter).replace(/`/g, '\\`')}\`, 'RiskIQ_Report_${new Date().getTime()}.txt')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download Report
+          </button>
+          <button class="export-btn" onclick="copyToClipboard(\`${buildTextReport(formatter).replace(/`/g, '\\`')}\`)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+            Copy Results
+          </button>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function buildTextReport(formatter) {
+      const report = formatter.getFormattedReport();
+      let text = `RISKIQ FINANCIAL ASSESSMENT REPORT\n`;
+      text += `Generated: ${new Date().toLocaleString()}\n`;
+      text += `${'='.repeat(60)}\n\n`;
+      
+      text += `RISK LEVEL: ${report.riskLevel}\n`;
+      text += `RISK SCORE: ${report.riskPercentage}/100\n\n`;
+      
+      text += `KEY FINANCIAL METRICS:\n`;
+      text += `${'-'.repeat(60)}\n`;
+      report.metrics.forEach(metric => {
+        text += `${metric.label}: ${metric.value}\n`;
+      });
+      
+      text += `\nRISK FACTORS & CONCERNS:\n`;
+      text += `${'-'.repeat(60)}\n`;
+      report.concerns.forEach((concern, i) => {
+        text += `${i + 1}. ${concern}\n`;
+      });
+      
+      text += `\nPOSITIVE FACTORS & STRENGTHS:\n`;
+      text += `${'-'.repeat(60)}\n`;
+      report.strengths.forEach((strength, i) => {
+        text += `${i + 1}. ${strength}\n`;
+      });
+      
+      text += `\nRECOMMENDED ACTIONS:\n`;
+      text += `${'-'.repeat(60)}\n`;
+      report.recommendations.forEach((rec, i) => {
+        text += `${i + 1}. ${rec}\n`;
+      });
+      
+      text += `\nFINAL ASSESSMENT:\n`;
+      text += `${'-'.repeat(60)}\n`;
+      text += `${report.conclusion}\n`;
+      
+      return text;
     }
 
     async function assessRisk(event) {
@@ -1158,18 +1238,9 @@
       const resultsDiv = document.getElementById('results');
       resultsDiv.classList.remove('hidden');
       resultsDiv.classList.add('loading');
-      
-      // Skeleton loading
-      resultsDiv.innerHTML = `
-        <div style="width: 100%;">
-          <div class="skeleton skeleton-block"></div>
-          <div class="skeleton skeleton-line"></div>
-          <div class="skeleton skeleton-line"></div>
-          <div class="skeleton skeleton-block"></div>
-        </div>
-      `;
+      resultsDiv.innerHTML = '<div style="display: flex; align-items: center;"><div class="spinner"></div><div class="loading-text">Analyzing your financial profile...</div></div>';
 
-      const prompt = `You are a financial risk assessment expert. Analyze this loan application and provide a comprehensive risk assessment.
+      const prompt = `You are a professional financial risk assessment expert. Analyze this loan application and provide a comprehensive, well-structured risk assessment.
 
 APPLICANT FINANCIAL PROFILE:
 - Annual Income: $${income}
@@ -1186,28 +1257,37 @@ LOAN REQUEST:
 - Term: ${loanTerm} years
 - Previous Defaults: ${previousDefaults}
 
-PROVIDE YOUR ANALYSIS IN THIS EXACT FORMAT:
+PROVIDE YOUR ANALYSIS IN THIS EXACT FORMAT ONLY:
 
 RISK LEVEL: [HIGH/MEDIUM/LOW]
 RISK PERCENTAGE: [0-100]%
 
 KEY METRICS:
-- Debt-to-Income Ratio: [calculation]
-- Loan-to-Income Ratio: [calculation]
-- Monthly Debt Payment: $[estimate]
-- Financial Cushion (Savings/Monthly Expenses): [ratio]
+- Debt-to-Income Ratio: [exact calculation with result]
+- Loan-to-Income Ratio: [exact calculation with result]
+- Monthly Payment Estimate: $[specific amount]
+- Financial Cushion Ratio: [ratio calculation]
+- Total Debt Including New Loan: $[amount]
 
 PRIMARY CONCERNS:
-[List 3-4 specific risk factors]
+- [Specific concern 1]
+- [Specific concern 2]
+- [Specific concern 3]
+- [Specific concern 4]
 
 POSITIVE FACTORS:
-[List 2-3 strengths]
+- [Specific strength 1]
+- [Specific strength 2]
+- [Specific strength 3]
 
 RECOMMENDATIONS:
-[Provide 3-4 actionable recommendations]
+- [Actionable recommendation 1]
+- [Actionable recommendation 2]
+- [Actionable recommendation 3]
+- [Actionable recommendation 4]
 
 CONCLUSION:
-[2-3 sentence summary with final recommendation]`;
+[2-3 comprehensive sentences providing final assessment and recommendation]`;
 
       try {
         const response = await fetch('/api/chat', {
@@ -1223,153 +1303,15 @@ CONCLUSION:
 
         showSuccessAnimation();
 
-        const riskLevelMatch = analysis.match(/RISK LEVEL:\s*(\w+)/i);
-        const riskPercentageMatch = analysis.match(/RISK PERCENTAGE:\s*(\d+)/i);
+        // Use formatter to structure the analysis
+        const formatter = new RiskIQAnalysisFormatter(analysis);
         
-        const riskLevel = riskLevelMatch ? riskLevelMatch[1].toUpperCase() : 'MEDIUM';
-        const riskPercentage = riskPercentageMatch ? parseInt(riskPercentageMatch[1]) : 50;
-
-        let riskClass = 'medium';
-        if (riskPercentage < 40) riskClass = 'low';
-        else if (riskPercentage > 65) riskClass = 'high';
-
-        const metricsMatch = analysis.match(/KEY METRICS:([\s\S]*?)PRIMARY CONCERNS:/i);
-        const concernsMatch = analysis.match(/PRIMARY CONCERNS:([\s\S]*?)POSITIVE FACTORS:/i);
-        const positiveMatch = analysis.match(/POSITIVE FACTORS:([\s\S]*?)RECOMMENDATIONS:/i);
-        const recommendMatch = analysis.match(/RECOMMENDATIONS:([\s\S]*?)CONCLUSION:/i);
-        const conclusionMatch = analysis.match(/CONCLUSION:([\s\S]*?)$/i);
-
-        const metrics = metricsMatch ? metricsMatch[1].trim().split('\n').filter(l => l.trim()) : [];
-        const concerns = concernsMatch ? concernsMatch[1].trim().split('\n').filter(l => l.trim()) : [];
-        const positive = positiveMatch ? positiveMatch[1].trim().split('\n').filter(l => l.trim()) : [];
-        const recommendations = recommendMatch ? recommendMatch[1].trim().split('\n').filter(l => l.trim()) : [];
-        const conclusion = conclusionMatch ? conclusionMatch[1].trim() : '';
-
-        const riskGaugeFill = (riskPercentage / 100) * 360;
-
         resultsDiv.classList.remove('loading');
-        resultsDiv.innerHTML = `
-          <div class="results-tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'overview')">Overview</button>
-            <button class="tab-btn" onclick="switchTab(event, 'metrics')">Metrics</button>
-            <button class="tab-btn" onclick="switchTab(event, 'details')">Details</button>
-            <button class="tab-btn" onclick="switchTab(event, 'recommendations')">Recommendations</button>
-          </div>
-
-          <div id="overview" class="tab-content active">
-            <div class="risk-display">
-              <div class="risk-gauge">
-                <div class="risk-gauge-bg"></div>
-                <div class="risk-gauge-progress" style="background: conic-gradient(var(--primary-teal) 0deg, var(--primary-teal) ${riskGaugeFill}deg, transparent ${riskGaugeFill}deg);"></div>
-                <div class="risk-gauge-value">
-                  <div class="risk-number">${riskPercentage}</div>
-                  <div class="risk-max">/ 100</div>
-                </div>
-              </div>
-              <div class="risk-badge ${riskClass}">${riskLevel} RISK</div>
-            </div>
-          </div>
-
-          <div id="metrics" class="tab-content">
-            <div class="metric-header">
-              <h3 style="margin: 0;">Key Metrics</h3>
-              <button class="copy-btn" onclick="copyToClipboard('${metrics.join('\\n').replace(/'/g, "\\'")}', this)">Copy</button>
-            </div>
-            <div class="metrics-grid">
-              ${metrics.map(m => {
-                const parts = m.split(':');
-                const label = parts[0].trim();
-                const value = parts.slice(1).join(':').trim();
-                return `<div class="metric">
-                  <div class="metric-label">${label}</div>
-                  <div class="metric-value">${value}</div>
-                </div>`;
-              }).join('')}
-            </div>
-          </div>
-
-          <div id="details" class="tab-content">
-            <div class="analysis-section">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="12 2 15.09 10.26 24 10.27 17.27 16.5 20.16 24.77 12 19.54 3.84 24.77 6.73 16.5 0 10.27 8.91 10.26 12 2"></polygon>
-                </svg>
-                Concerns
-              </h3>
-              ${concerns.map(c => `<div class="analysis-item concern">${c}</div>`).join('')}
-            </div>
-
-            <div class="analysis-section">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Strengths
-              </h3>
-              ${positive.map(p => `<div class="analysis-item positive">${p}</div>`).join('')}
-            </div>
-          </div>
-
-          <div id="recommendations" class="tab-content">
-            <div class="analysis-section">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 16v-4M12 8h.01"></path>
-                </svg>
-                Recommendations
-              </h3>
-              ${recommendations.map(r => `<div class="analysis-item">${r}</div>`).join('')}
-            </div>
-
-            <div class="assessment-box">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Assessment
-              </h3>
-              <p>${conclusion}</p>
-            </div>
-          </div>
-
-          <div class="export-buttons">
-            <button class="export-btn" onclick="downloadAsText({riskLevel: '${riskLevel}', riskPercentage: ${riskPercentage}, income: '${income}', creditScore: '${creditScore}', totalDebt: '${totalDebt}', fullAnalysis: \`${analysis.replace(/`/g, '\\`')}\`})">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              Download Report
-            </button>
-            <button class="export-btn" onclick="copyToClipboard(\`${analysis.replace(/`/g, '\\`')}\`, this)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-              </svg>
-              Copy Results
-            </button>
-          </div>
-        `;
+        resultsDiv.innerHTML = buildProfessionalReport(formatter);
       } catch (error) {
         resultsDiv.classList.remove('loading');
-        resultsDiv.innerHTML = `<div class="error-box">Error: ${error.message}</div>`;
+        resultsDiv.innerHTML = `<div class="error-box">Error: ${error.message}. Please try again.</div>`;
       }
-    }
-
-    function switchTab(event, tabId) {
-      event.preventDefault();
-      
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
     }
   </script>
 </body>
